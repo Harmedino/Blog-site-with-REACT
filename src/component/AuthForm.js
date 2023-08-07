@@ -9,12 +9,12 @@ function AuthForm() {
   const isLogin = searchParams.get("mode") === "login";
   const mode = searchParams.get("mode");
 
-  const [data, setData] = useState();
+  const [userdata, setUserData] = useState();
 
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
-    setData({ ...data, [name]: value });
+    setUserData({ ...userdata, [name]: value });
   }
 
   const config = {
@@ -23,17 +23,17 @@ function AuthForm() {
     },
   };
 
-  function handleClick(event) {
+  async function handleClick(event) {
     event.preventDefault();
-    console.log(data, mode);
 
     if (mode === "signup") {
       try {
-        const response = axios.post(
-          "http://localhost:5000/auth/register",
-          JSON.stringify(data),
+        const { data } = await axios.post(
+          "http://localhost:5000/register",
+          JSON.stringify(userdata),
           config
         );
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -48,11 +48,22 @@ function AuthForm() {
         {!isLogin && (
           <>
             <p>
-              <label htmlFor="fullname">Full Name:</label>
+              <label htmlFor="fullname">First Name:</label>
               <input
-                id="name:"
+                id="firstname"
                 type="text"
-                name="name"
+                name="firstname"
+                required
+                placeholder="fullname"
+                onChange={handleChange}
+              />
+            </p>
+            <p>
+              <label htmlFor="fullname">Last Name:</label>
+              <input
+                id="lastname"
+                type="text"
+                name="lastname"
                 required
                 placeholder="fullname"
                 onChange={handleChange}
