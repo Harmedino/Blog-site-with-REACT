@@ -1,14 +1,26 @@
 import { Link, useSearchParams } from "react-router-dom";
 
 import classes from "./AuthForm.module.css";
+import { useState } from "react";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
 
+  const [data, setData] = useState();
+
+  function handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData({ ...data, [name]: value });
+  }
+  function handleClick() {
+    console.log(data);
+  }
+
   return (
     <>
-      <form method="post" className={classes.form}>
+      <form method="post" className={classes.form} onSubmit={handleClick}>
         <h1>{isLogin ? "Log in" : "Create a new user"}</h1>
 
         {!isLogin && (
@@ -21,6 +33,7 @@ function AuthForm() {
                 name="name"
                 required
                 placeholder="fullname"
+                onChange={handleChange}
               />
             </p>
             <p>
@@ -31,6 +44,7 @@ function AuthForm() {
                 name="username"
                 required
                 placeholder="username"
+                onChange={handleChange}
               />
             </p>
           </>
@@ -43,6 +57,7 @@ function AuthForm() {
             name="email"
             required
             placeholder="Email"
+            onChange={handleChange}
           />
         </p>
         <p>
@@ -53,6 +68,7 @@ function AuthForm() {
             name="password"
             required
             placeholder="password"
+            onChange={handleChange}
           />
         </p>
         <div className={classes.actions}>
