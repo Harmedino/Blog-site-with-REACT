@@ -1,13 +1,17 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import classes from "./AuthForm.module.css";
 import { useState } from "react";
 import axios from "axios";
+import Message from "../UI/Message";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
   const mode = searchParams.get("mode");
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const [userdata, setUserData] = useState();
 
@@ -24,6 +28,7 @@ function AuthForm() {
   };
 
   async function handleClick(event) {
+    setIsLoading(true);
     event.preventDefault();
 
     if (mode === "signup") {
@@ -33,15 +38,21 @@ function AuthForm() {
           JSON.stringify(userdata),
           config
         );
-        console.log(data);
+        setMessage(data.message);
+        setTimeout(() => {
+          setMessage("");
+          navigate("/blogList");
+        }, 2000);
       } catch (error) {
         console.log(error);
       }
     }
+    setIsLoading(false);
   }
 
   return (
     <>
+      {message && <Message message={message}></Message>}
       <form method="post" className={classes.form} onSubmit={handleClick}>
         <h1>{isLogin ? "Log in" : "Create a new user"}</h1>
 
@@ -108,7 +119,7 @@ function AuthForm() {
           <Link to={`?mode=${isLogin ? "signup" : "login"}`}>
             {isLogin ? "Create new user" : "Login"}
           </Link>
-          <button>Save</button>
+          <button>{isLoading ? "Saving" : "Save"}</button>
         </div>
       </form>
     </>

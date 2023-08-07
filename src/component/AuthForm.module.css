@@ -2,6 +2,10 @@
   max-width: 40rem;
   margin: 2rem auto;
 }
+.form h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
 fieldset {
 }
 .form label {
