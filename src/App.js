@@ -1,4 +1,5 @@
 import "./App.css";
+import Message from "./UI/Message";
 import Navbar from "./component/Navbar";
 import Routing from "./component/Routing";
 
