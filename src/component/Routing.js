@@ -13,7 +13,7 @@ const routes = [
       { path: "more/:id", element: <Fullblog /> },
     ],
   },
-  { path: "/auth", element: <AuthForm /> },
+  { path: "/Auth", element: <AuthForm /> },
 ];
 
 const Routing = () => {

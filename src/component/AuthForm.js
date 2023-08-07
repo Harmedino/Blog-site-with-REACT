@@ -2,10 +2,12 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import classes from "./AuthForm.module.css";
 import { useState } from "react";
+import axios from "axios";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
+  const mode = searchParams.get("mode");
 
   const [data, setData] = useState();
 
@@ -14,8 +16,28 @@ function AuthForm() {
     const value = e.target.value;
     setData({ ...data, [name]: value });
   }
-  function handleClick() {
-    console.log(data);
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json", // Set the appropriate content type
+    },
+  };
+
+  function handleClick(event) {
+    event.preventDefault();
+    console.log(data, mode);
+
+    if (mode === "signup") {
+      try {
+        const response = axios.post(
+          "http://localhost:5000/auth/register",
+          JSON.stringify(data),
+          config
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   return (
