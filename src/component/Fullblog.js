@@ -30,7 +30,7 @@ const Fullblog = () => {
       await fetch("http://localhost:5000/deleteBlog/" + id, {
         method: "DELETE",
       });
-      fetching();
+      navigate("/blogList");
     } catch (err) {
       alert(err.message);
     }
