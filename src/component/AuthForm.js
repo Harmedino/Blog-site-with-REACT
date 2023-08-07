@@ -32,20 +32,37 @@ function AuthForm() {
     event.preventDefault();
 
     if (mode === "signup") {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:5000/register",
-          JSON.stringify(userdata),
-          config
-        );
-        setMessage(data.message);
-        setTimeout(() => {
-          setMessage("");
-          navigate("/blogList");
-        }, 2000);
-      } catch (error) {
-        console.log(error);
-      }
+      const registerUser = async () => {
+        try {
+          const { data } = await axios.post(
+            "http://localhost:5000/register",
+            JSON.stringify(userdata),
+            config
+          );
+
+          // Check if the token exists in the response data
+          if (data.token) {
+            // Save the token to local storage if available
+            if (typeof localStorage !== "undefined") {
+              localStorage.setItem("authToken", data.token);
+            }
+          }
+
+          // Display the registration message
+          setMessage(data.message);
+          setTimeout(() => {
+            setMessage("");
+            navigate("/blogList");
+
+            // Clear the token from local storage for improved security
+            if (typeof localStorage !== "undefined") {
+              localStorage.removeItem("authToken");
+            }
+          }, 2000);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
     }
     setIsLoading(false);
   }
