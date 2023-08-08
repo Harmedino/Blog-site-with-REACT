@@ -1,7 +1,39 @@
 import { NavLink } from "react-router-dom";
 import classes from "./Navbar.module.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Navbar = () => {
+  const [data, setData] = useState();
+  useEffect(() => {
+    activeUser();
+  }, []);
+
+  async function activeUser() {
+    let token = localStorage.getItem("token");
+    console.log(token);
+    if (token) {
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/verifyToken",
+          {}, // No data in this case
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Correct header format
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        // Handle errors here
+        console.log(error);
+      }
+    }
+  }
+  
+  
   return (
     <nav className="navbar">
       <h1>HarmedinoBlog</h1>
@@ -37,6 +69,16 @@ const Navbar = () => {
                 }
               >
                 Auth
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="Auth?mode=login"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                Logout
               </NavLink>
             </li>
           </ul>
