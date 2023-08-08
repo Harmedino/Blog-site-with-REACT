@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Message = (props) => {
+const Message = ({ message }) => {
   return (
-    <div className="message">
-      <h3>{props.message}</h3>
+    <div className={`message ${message ? "slideIn" : "slideOut"}`}>
+      <h3>{message}</h3>
     </div>
   );
 };

@@ -133,7 +133,6 @@ code {
 .message {
   width: 100%;
   height: 10vh;
-
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -141,16 +140,27 @@ code {
   position: fixed;
   top: -40%;
   left: 0;
-  animation: slideInFromTop 1s forwards;
 }
-.message h3 {
-  color: #f1356d;
-  letter-spacing: 2px;
+
+.message.slideIn {
+  animation-name: slideInFromTop;
+  animation-duration: 2s;
+}
+
+.message.slideOut {
+  animation-name: slideOutToTop;
+  animation-duration: 2s;
 }
 
 @keyframes slideInFromTop {
   to {
     top: 0;
+  }
+}
+
+@keyframes slideOutToTop {
+  to {
+    top: -40%;
   }
 }
 
