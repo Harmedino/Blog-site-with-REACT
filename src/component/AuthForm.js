@@ -38,23 +38,40 @@ function AuthForm() {
           JSON.stringify(userdata),
           config
         );
-          console.log(data)
-            localStorage.setItem("authToken", data.token);
-        
+        console.log(data);
+        localStorage.setItem("authToken", data.token);
+
         setMessage(data.message);
         setTimeout(() => {
           setMessage("");
           navigate("/blogList");
-          
         }, 2000);
       } catch (error) {
-        console.log(error.message);
-        if (error.message === "Request failed with status code 409") {
-          setMessage("Email already exist");
-          setTimeout(() => {
-            setMessage("");
-          }, 3000);
-        }
+        setMessage(error.response.data.error);
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
+      }
+    } else if (mode === "login") {
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/login",
+          JSON.stringify(userdata),
+          config
+        );
+        console.log(response.data);
+        localStorage.setItem("authToken", response.data.token);
+        setMessage(response.data.message);
+        setTimeout(() => {
+          setMessage("");
+          navigate("/blogList");
+        }, 2000);
+      } catch (error) {
+        console.log();
+        setMessage(error.response.data.error);
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
       }
     }
     setIsLoading(false);
