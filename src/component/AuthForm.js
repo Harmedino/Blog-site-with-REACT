@@ -38,19 +38,14 @@ function AuthForm() {
           JSON.stringify(userdata),
           config
         );
-
-        if (data.token) {
-          if (typeof localStorage !== "undefined") {
+          console.log(data)
             localStorage.setItem("authToken", data.token);
-          }
-        }
+        
         setMessage(data.message);
         setTimeout(() => {
           setMessage("");
           navigate("/blogList");
-          if (typeof localStorage !== "undefined") {
-            localStorage.removeItem("authToken");
-          }
+          
         }, 2000);
       } catch (error) {
         console.log(error.message);

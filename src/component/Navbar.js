@@ -1,25 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Navbar = () => {
   const [data, setData] = useState();
+  const navigate = useNavigate();
   useEffect(() => {
     activeUser();
   }, []);
 
   async function activeUser() {
-    let token = localStorage.getItem("token");
-    console.log(token);
+    let token = localStorage.getItem("authToken");
+
     if (token) {
       try {
         const response = await axios.post(
           "http://localhost:5000/verifyToken",
-          {}, // No data in this case
+          {},
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Correct header format
+              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
           }
@@ -32,8 +33,12 @@ const Navbar = () => {
       }
     }
   }
-  
-  
+
+  const handleLogout = () => {
+    localStorage.setItem("authToken", "");
+    navigate("Auth?mode=login");
+  };
+
   return (
     <nav className="navbar">
       <h1>HarmedinoBlog</h1>
@@ -61,26 +66,30 @@ const Navbar = () => {
                 Create new blog
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="Auth?mode=login"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-              >
-                Auth
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="Auth?mode=login"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-              >
-                Logout
-              </NavLink>
-            </li>
+            {!data ? (
+              <li>
+                <NavLink
+                  to="Auth?mode=login"
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                >
+                  Auth
+                </NavLink>
+              </li>
+            )
+            : (
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                  onClick={handleLogout}
+                >
+                  Logout
+                </NavLink>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
