@@ -10,13 +10,13 @@ const Navbar = () => {
   }, []);
 
   async function activeUser() {
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem("authToken");
     console.log(token);
     if (token) {
       try {
         const response = await axios.post(
           "http://localhost:5000/verifyToken",
-          {}, // No data in this case
+          {}, 
           {
             headers: {
               Authorization: `Bearer ${token}`, // Correct header format
