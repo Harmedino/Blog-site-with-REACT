@@ -23,7 +23,7 @@ function AuthForm() {
 
   const config = {
     headers: {
-      "Content-Type": "application/json", // Set the appropriate content type
+      "Content-Type": "application/json",
     },
   };
 
@@ -40,25 +40,26 @@ function AuthForm() {
         );
 
         if (data.token) {
-          // Save the token to local storage if available
           if (typeof localStorage !== "undefined") {
             localStorage.setItem("authToken", data.token);
           }
         }
-
-        // Display the registration message
         setMessage(data.message);
         setTimeout(() => {
           setMessage("");
           navigate("/blogList");
-
-          // Clear the token from local storage for improved security
           if (typeof localStorage !== "undefined") {
             localStorage.removeItem("authToken");
           }
         }, 2000);
       } catch (error) {
         console.log(error.message);
+        if (error.message === "Request failed with status code 409") {
+          setMessage("Email already exist");
+          setTimeout(() => {
+            setMessage("");
+          }, 3000);
+        }
       }
     }
     setIsLoading(false);
