@@ -14,6 +14,7 @@ const routes = [
     ],
   },
   { path: "/Auth", element: <AuthForm /> },
+  { path: "/logout" },
 ];
 
 const Routing = () => {

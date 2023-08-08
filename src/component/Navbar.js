@@ -34,11 +34,6 @@ const Navbar = () => {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.setItem("authToken", "");
-    navigate("Auth?mode=login");
-  };
-
   return (
     <nav className="navbar">
       <h1>HarmedinoBlog</h1>
@@ -77,16 +72,15 @@ const Navbar = () => {
                   Auth
                 </NavLink>
               </li>
-            )
-            : (
+            ) : (
               <li>
                 <NavLink
+                  to="/logout"
                   className={({ isActive }) =>
                     isActive ? classes.active : undefined
                   }
-                  onClick={handleLogout}
                 >
-                  Logout
+                  <button>logout</button>
                 </NavLink>
               </li>
             )}
