@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Message from "../UI/Message";
+import axios from "axios";
 
 const CreateBlog = () => {
   const [pending, setPending] = useState(false);
@@ -9,7 +10,7 @@ const CreateBlog = () => {
   const navigate = useNavigate();
   const blogValue = useRef();
   const [categories, setCategories] = useState([]);
-  const [message, setMesage] = useState("");
+  const [message, setMessage] = useState("");
 
   const { id } = useParams();
   useEffect(() => {
@@ -35,42 +36,54 @@ const CreateBlog = () => {
       blog[name] = value;
     });
 
+    console.log(blog);
+
     setPending(true);
 
     try {
       if (!data) {
-        const res = await fetch("http://localhost:5000/sendPost", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(blog),
-        });
-        const newData = await res.json();
+        const response = await axios.post(
+          "http://localhost:5000/sendPost",
+          blog,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+
         setPending(false);
-        setMesage(newData.message);
-        navigate(`/blogList`);
+        setMessage(response.data.message);
+        setTimeout(() => {
+          setMessage("");
+          navigate(`/blogList`);
+        }, 3000);
       } else {
-        // If data is available, it means this is an update to an existing blog
-        const res = await fetch(`http://localhost:5000/update/${data._id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(blog),
-        });
-        const updatedData = await res.json();
-        console.log(updatedData);
+        const response = await axios.patch(
+          `http://localhost:5000/update/${data._id}`,
+          blog,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+
+        console.log(response.data);
         navigate(`/blogList`);
         setPending(false);
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
   return (
     <>
-      {message && <Message></Message>}
+      {message && <Message message={message}></Message>}
       <div className="create">
         <h2>Create a new blog</h2>
-        <form onSubmit={handleSubmit} ref={blogValue}>
+        <form
+          onSubmit={handleSubmit}
+          ref={blogValue}
+          encType="multipart/form-data"
+        >
           <label>Blog title</label>
           <input
             type="text"
@@ -79,6 +92,7 @@ const CreateBlog = () => {
             defaultValue={data ? data.title : ""}
             placeholder="Enter blog title"
           />
+          <label>Category:</label>
           <select
             required
             name="category"
@@ -114,7 +128,7 @@ const CreateBlog = () => {
           <label>Publication Date:</label>
           <input type="date" name="publicationDate" />
 
-          <input type="file" name="featuredImage" accept="image/*" />
+          <input type="file" name="image" />
           {!pending && !data && <button>Add Blog</button>}
           {!pending && data && <button>Update Blog</button>}
           {pending && !data && <button>Add Blog ...</button>}
