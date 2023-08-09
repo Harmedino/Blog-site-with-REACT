@@ -1,0 +1,59 @@
+/* Footer.module.css */
+.footer {
+  background-color: #f1356d;
+  color: white;
+  padding: 3rem 0;
+}
+
+.footerContent {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  color: white !important;
+}
+
+.footerColumn {
+  flex: 1;
+  max-width: 300px;
+  margin-bottom: 2rem;
+}
+
+.footerColumn h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: white !important;
+}
+
+.footerColumn p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: white !important;
+}
+
+.footerColumn ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.footerColumn ul li {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: white !important;
+}
+
+.copyRight {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: white !important;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .footerContent {
+    flex-direction: column;
+  }
+}
