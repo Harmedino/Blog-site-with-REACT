@@ -28,7 +28,7 @@ const DisplayBlogs = () => {
 
   return (
     <div className="blog-details">
-      <HeaderBlog> </HeaderBlog>
+      {/* <HeaderBlog> </HeaderBlog> */}
       <main className="blog-list">
         {pending && <div> Loading... </div>}
         {fail && <div>{fail}</div>}

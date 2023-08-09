@@ -47,7 +47,7 @@ const Navbar = () => {
           <i className={`fas fa-bars`}></i>
         </div>
         <div className={`${classes.links} ${menuOpen ? classes.showBar : ""}`}>
-          <ul className={classes.list}>
+          <ul className={classes.list} onClick={handleMenuToggle}>
             <li>
               <NavLink
                 to="/blogList"
