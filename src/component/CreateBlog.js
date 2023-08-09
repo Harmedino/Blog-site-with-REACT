@@ -9,6 +9,7 @@ const CreateBlog = () => {
   const navigate = useNavigate();
   const blogValue = useRef();
   const [categories, setCategories] = useState([]);
+  const [message, setMesage] = useState("");
 
   const { id } = useParams();
   useEffect(() => {
@@ -45,7 +46,7 @@ const CreateBlog = () => {
         });
         const newData = await res.json();
         setPending(false);
-        // Navigate to the newly created blog's page (assuming you get the blog ID in the response)
+        setMesage(newData.message);
         navigate(`/blogList`);
       } else {
         // If data is available, it means this is an update to an existing blog
@@ -66,7 +67,7 @@ const CreateBlog = () => {
 
   return (
     <>
-      {<Message></Message>}
+      {message && <Message></Message>}
       <div className="create">
         <h2>Create a new blog</h2>
         <form onSubmit={handleSubmit} ref={blogValue}>
