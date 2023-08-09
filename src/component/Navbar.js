@@ -43,18 +43,17 @@ const Navbar = () => {
     <nav className={classes.navbar}>
       <div className={classes.navContainer}>
         <h1>Harmedino</h1>
-        <div className={classes.menuIcon} onClick={handleMenuToggle}>
-          <div className={classes.iconBar}></div>
-          <div className={classes.iconBar}></div>
-          <div className={classes.iconBar}></div>
+        <div className={classes.hamburgerMenu} onClick={handleMenuToggle}>
+          <i className={`fas fa-bars`}></i>
         </div>
-        <div className={`${classes.links} ${menuOpen ? classes.open : ""}`}>
+        <div className={`${classes.links} ${menuOpen ? classes.showBar : ""}`}>
           <ul className={classes.list}>
             <li>
               <NavLink
                 to="/blogList"
-                className={classes.link}
-                activeClassName={classes.active}
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
               >
                 Home
               </NavLink>
@@ -62,58 +61,62 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/"
-                className={classes.link}
-                activeClassName={classes.active}
-                end
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
               >
-                Create new blog
+                Create blog
               </NavLink>
             </li>
             <li>
-                  <NavLink
-                    to="/profile"
-                    className={classes.link}
-                    activeClassName={classes.active}
-                  >
-                    Profile
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/about"
-                    className={classes.link}
-                    activeClassName={classes.active}
-                  >
-                    About Us
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/contact"
-                    className={classes.link}
-                    activeClassName={classes.active}
-                  >
-                    Contact
-                  </NavLink>
-                </li>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                Contact
+              </NavLink>
+            </li>
             {!data ? (
               <li>
                 <NavLink
                   to="/Auth?mode=login"
-                  className={classes.link}
-                  activeClassName={classes.active}
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
                 >
                   Auth
                 </NavLink>
               </li>
             ) : (
               <>
-               
                 <li>
                   <NavLink
                     to="/logout"
-                    className={classes.link}
-                    activeClassName={classes.active}
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
                   >
                     Logout
                   </NavLink>
