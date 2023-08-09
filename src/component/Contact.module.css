@@ -1,0 +1,83 @@
+.hero {
+  background-image: url("https://media.istockphoto.com/id/1418045846/photo/email-phone-website-contact-us-website-banner-marketing.webp?b=1&s=170667a&w=0&k=20&c=Ln3XGXD1qDcQOu5igbrB7TY2_T-pOI2lGy0y-RHu87Y=");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 4rem 0;
+  height: 30vh;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* ContactForm.module.css */
+.contactForm {
+  background-color: #f9f9f9;
+  width: 70%;
+  margin: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contactForm h2 {
+  margin-bottom: 1.5rem;
+  color: #f1356d;
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 40px;
+  padding-top: 20px;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+form {
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.formGroup textarea {
+  resize: vertical;
+}
+
+button {
+  background-color: #f1356d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #d81b5a;
+}
