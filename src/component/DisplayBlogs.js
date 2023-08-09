@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import HeaderBlog from "./HeaderBlog";
 
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState();
@@ -15,8 +16,8 @@ const DisplayBlogs = () => {
 
   async function fetching() {
     try {
-      const {data} = await axios.get("http://localhost:5000/getBlog");
-      
+      const { data } = await axios.get("http://localhost:5000/getBlog");
+
       setBlogs(data);
     } catch (error) {
       setFail(error.message);
@@ -27,9 +28,22 @@ const DisplayBlogs = () => {
 
   return (
     <div className="blog-details">
-      {pending && <div> Loading... </div>}
-      {fail && <div>{fail}</div>}
-      {blogs &&
+      <HeaderBlog> </HeaderBlog>
+      <main className="blog-list">
+        {pending && <div> Loading... </div>}
+        {fail && <div>{fail}</div>}
+        {blogs &&
+          blogs.map((blogs) => (
+            <div className="blog-post" key={blogs._id}>
+              <img src="blog-image.jpg" alt="Blog Post" />
+              <h2>{blogs.title}</h2>
+              <p> {blogs.body.slice(0, 200)}...</p>
+              <Link to={"more/" + blogs._id + "?" + blogs.title}>
+                Read more ...
+              </Link>
+            </div>
+          ))}
+        {/* {blogs &&
         blogs.map((blogs) => (
           <article key={blogs._id}>
             <h2>{blogs.title}</h2>
@@ -41,7 +55,8 @@ const DisplayBlogs = () => {
               Read more ...
             </Link>
           </article>
-        ))}
+        ))} */}
+      </main>
     </div>
   );
 };

@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <h1>HarmedinoBlog</h1>
+      <h1>Harmedino</h1>
       <div className="links">
         <nav>
           <ul className={classes.list}>
