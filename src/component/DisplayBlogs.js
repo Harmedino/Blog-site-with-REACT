@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import HeaderBlog from "./HeaderBlog";
 
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState();
@@ -28,7 +27,6 @@ const DisplayBlogs = () => {
 
   return (
     <div className="blog-details">
-      {/* <HeaderBlog> </HeaderBlog> */}
       <main className="blog-list">
         {pending && <div> Loading... </div>}
         {fail && <div>{fail}</div>}
