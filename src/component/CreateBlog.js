@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Message from "../UI/Message";
 
 const CreateBlog = () => {
   const [pending, setPending] = useState(false);
   const [data, setData] = useState();
   const navigate = useNavigate();
   const blogValue = useRef();
+  const [categories, setCategories] = useState([]);
+  const [message, setMesage] = useState("");
 
   const { id } = useParams();
   useEffect(() => {
-    // setData("");
+    const fetchedCategories = ["Technology", "Travel", "Fashion"];
+    setCategories(fetchedCategories);
     if (id) {
       getIndex();
     }
@@ -42,7 +46,7 @@ const CreateBlog = () => {
         });
         const newData = await res.json();
         setPending(false);
-        // Navigate to the newly created blog's page (assuming you get the blog ID in the response)
+        setMesage(newData.message);
         navigate(`/blogList`);
       } else {
         // If data is available, it means this is an update to an existing blog
@@ -62,34 +66,62 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="create">
-      <h2>Create a new blog</h2>
-      <form onSubmit={handleSubmit} ref={blogValue}>
-        <label>Blog title</label>
-        <input
-          type="text"
-          required
-          name="title"
-          defaultValue={data ? data.title : ""}
-        />
-        <label>Blog body:</label>
-        <textarea
-          cols="30" rows="10"
-          required
-          defaultValue={data ? data.body : ""}
-          name="body"
-        ></textarea>
-        <label> Blog author:</label>
-        <select defaultValue={data ? data.author : ""} name="author">
-          <option value="selim">selim</option>
-          <option value="ahmed">ahmed</option>
-        </select>
-        {!pending && !data && <button>Add Blog</button>}
-        {!pending && data && <button>Update Blog</button>}
-        {pending && !data && <button>Add Blog ...</button>}
-        {pending && data && <button>Updating Blog ...</button>}
-      </form>
-    </div>
+    <>
+      {message && <Message></Message>}
+      <div className="create">
+        <h2>Create a new blog</h2>
+        <form onSubmit={handleSubmit} ref={blogValue}>
+          <label>Blog title</label>
+          <input
+            type="text"
+            required
+            name="title"
+            defaultValue={data ? data.title : ""}
+            placeholder="Enter blog title"
+          />
+          <select
+            required
+            name="category"
+            defaultValue={data ? data.category : ""}
+          >
+            <option value="" disabled>
+              Select a category
+            </option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <label>Blog body:</label>
+          <textarea
+            cols="30"
+            rows="10"
+            required
+            defaultValue={data ? data.body : ""}
+            name="body"
+            placeholder="Write your blog content"
+          ></textarea>
+
+          <label>Author</label>
+          <input
+            type="text"
+            required
+            name="author"
+            defaultValue={data ? data.author : ""}
+            placeholder="Enter blog title"
+          />
+          <label>Publication Date:</label>
+          <input type="date" name="publicationDate" />
+
+          <input type="file" name="featuredImage" accept="image/*" />
+          {!pending && !data && <button>Add Blog</button>}
+          {!pending && data && <button>Update Blog</button>}
+          {pending && !data && <button>Add Blog ...</button>}
+          {pending && data && <button>Updating Blog ...</button>}
+        </form>
+      </div>
+    </>
   );
 };
 
