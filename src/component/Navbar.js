@@ -10,6 +10,12 @@ const Navbar = () => {
     activeUser();
   }, []);
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   async function activeUser() {
     let token = localStorage.getItem("authToken");
 
@@ -33,19 +39,22 @@ const Navbar = () => {
       }
     }
   }
-
   return (
-    <nav className="navbar">
-      <h1>Harmedino</h1>
-      <div className="links">
-        <nav>
+    <nav className={classes.navbar}>
+      <div className={classes.navContainer}>
+        <h1>Harmedino</h1>
+        <div className={classes.menuIcon} onClick={handleMenuToggle}>
+          <div className={classes.iconBar}></div>
+          <div className={classes.iconBar}></div>
+          <div className={classes.iconBar}></div>
+        </div>
+        <div className={`${classes.links} ${menuOpen ? classes.open : ""}`}>
           <ul className={classes.list}>
             <li>
               <NavLink
                 to="/blogList"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
+                className={classes.link}
+                activeClassName={classes.active}
               >
                 Home
               </NavLink>
@@ -53,42 +62,68 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
+                className={classes.link}
+                activeClassName={classes.active}
                 end
               >
                 Create new blog
               </NavLink>
             </li>
+            <li>
+                  <NavLink
+                    to="/profile"
+                    className={classes.link}
+                    activeClassName={classes.active}
+                  >
+                    Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/about"
+                    className={classes.link}
+                    activeClassName={classes.active}
+                  >
+                    About Us
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/contact"
+                    className={classes.link}
+                    activeClassName={classes.active}
+                  >
+                    Contact
+                  </NavLink>
+                </li>
             {!data ? (
               <li>
                 <NavLink
-                  to="Auth?mode=login"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
+                  to="/Auth?mode=login"
+                  className={classes.link}
+                  activeClassName={classes.active}
                 >
                   Auth
                 </NavLink>
               </li>
             ) : (
-              <li>
-                <NavLink
-                  to="/logout"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                >
-                  <button>logout</button>
-                </NavLink>
-              </li>
+              <>
+               
+                <li>
+                  <NavLink
+                    to="/logout"
+                    className={classes.link}
+                    activeClassName={classes.active}
+                  >
+                    Logout
+                  </NavLink>
+                </li>
+              </>
             )}
           </ul>
-        </nav>
+        </div>
       </div>
     </nav>
   );
 };
-
 export default Navbar;

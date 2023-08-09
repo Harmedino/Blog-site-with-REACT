@@ -7,7 +7,9 @@ function App() {
   return (
     <div className="body">
       <Navbar />
-      <Routing></Routing>
+      <div className="space">
+        <Routing></Routing>
+      </div>
     </div>
   );
 }
