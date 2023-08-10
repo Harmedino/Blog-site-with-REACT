@@ -28,24 +28,60 @@ const DisplayBlogs = () => {
       // console.log(image);
     }
   }
+  const formatPublicationDate = (date) => {
+    const currentDate = new Date();
+    const publicationDate = new Date(date);
+
+    const timeDifferenceInSeconds = (currentDate - publicationDate) / 1000;
+
+    if (timeDifferenceInSeconds < 60) {
+      return "just now";
+    } else if (timeDifferenceInSeconds < 3600) {
+      const minutes = Math.floor(timeDifferenceInSeconds / 60);
+      return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
+    } else if (timeDifferenceInSeconds < 2592000) {
+      const days = Math.floor(timeDifferenceInSeconds / 86400);
+      return `${days} ${days === 1 ? "day" : "days"} ago`;
+    } else {
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      const month = monthNames[publicationDate.getMonth()];
+      return `last ${month}`;
+    }
+  };
 
   return (
     <div className="blog-details">
       <main className="blog-list">
-        {pending && <div> Loading... </div>}
+        {pending && <div>Loading...</div>}
         {fail && <div>{fail}</div>}
         {blogs &&
-          blogs.map((blogs, index) => (
-            <div className="blog-post" key={blogs._id}>
-              <img
-                src={`http://localhost:5000/uploads/${blogs.image.data}`}
-                alt="Blog Post"
-              />
-              <h2>{blogs.title}</h2>
-              <p> {blogs.body.slice(0, 200)}...</p>
-              <Link to={"more/" + blogs._id + "?" + blogs.title}>
-                Read more ...
-              </Link>
+          blogs.map((blog, index) => (
+            <div className="blog-card" key={blog._id}>
+              <div className="blog-image">
+                <img
+                  src={`http://localhost:5000/uploads/${blog.image.data}`}
+                  alt="Blog Post"
+                />
+              </div>
+              <div className="blog-content">
+                <h2>{blog.title}</h2>
+                <p>{blog.body.slice(0, 200)}...</p>
+                <p>Publication Date: {formatPublicationDate(blog.date)}</p>
+                <Link to={`more/${blog._id}?${blog.title}`}>Read more ...</Link>
+              </div>
             </div>
           ))}
       </main>

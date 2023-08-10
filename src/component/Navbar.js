@@ -2,13 +2,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { activeUser } from "../lib/token";
 
 const Navbar = () => {
   const [data, setData] = useState();
   const navigate = useNavigate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    activeUser();
+    const fetchData = async () => {
+      const user = await activeUser();
+      setData(user);
+    };
+
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -16,29 +27,6 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
-  async function activeUser() {
-    let token = localStorage.getItem("authToken");
-
-    if (token) {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/verifyToken",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setData(response.data);
-        console.log(response.data);
-      } catch (error) {
-        // Handle errors here
-        console.log(error);
-      }
-    }
-  }
   return (
     <nav className={classes.navbar}>
       <div className={classes.navContainer}>
