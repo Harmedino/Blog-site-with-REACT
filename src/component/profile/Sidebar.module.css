@@ -1,0 +1,45 @@
+/* Sidebar.module.css */
+
+.sidebar {
+  width: 200px;
+  background-color: #f1356d;
+  color: #fff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.sidebar ul {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 1rem;
+  padding-top: 2rem;
+}
+
+.sidebar ul li {
+  color: white;
+  font-weight: 600;
+  margin-top: 1.7rem;
+  border: none !important;
+  text-align: center;
+  cursor: pointer;
+}
+.sidebar ul li:hover {
+  background-color: transparent;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    height: 20vh;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+    justify-content: space-around;
+    padding: 0 !important;
+  }
+}
