@@ -7,6 +7,9 @@ import Contact from "./Contact";
 import AboutUs from "./AboutUs";
 import Profile from "./profile/Profile";
 import Profilepage from "./profile/Profilepage";
+import Published from "./profile/Published";
+import Approved from "./profile/Approved";
+import Disapproved from "./profile/Disapproved";
 
 const routes = [
   { path: "/:id?", element: <CreateBlog /> },
@@ -23,7 +26,12 @@ const routes = [
   {
     path: "/profile",
     element: <Profile />,
-    children: [{ index: true, element: <Profilepage /> }],
+    children: [
+      { index: true, element: <Profilepage /> },
+      { path: "published", element: <Published /> },
+      { path: "approved", element: <Approved /> },
+      { path: "disapproved", element: <Disapproved /> },
+    ],
   },
   { path: "/logout" },
 ];

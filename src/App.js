@@ -1,17 +1,21 @@
 import "./App.css";
-import Message from "./UI/Message";
 import Footer from "./component/Footer";
 import Navbar from "./component/Navbar";
 import Routing from "./component/Routing";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+  const startsWithAny = (pathList) =>
+    pathList.some((path) => location.pathname.startsWith(path));
+
   return (
     <div className="body">
       <Navbar />
       <div className="space">
-        <Routing></Routing>
+        <Routing />
       </div>
-      <Footer />
+      {!startsWithAny(["/profile", "/Auth"]) && <Footer />}
     </div>
   );
 }
