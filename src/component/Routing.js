@@ -4,6 +4,7 @@ import DisplayBlogs from "./DisplayBlogs";
 import Fullblog from "./Fullblog";
 import AuthForm from "./AuthForm";
 import Contact from "./Contact";
+import AboutUs from "./AboutUs";
 
 const routes = [
   { path: "/:id?", element: <CreateBlog /> },
@@ -16,6 +17,7 @@ const routes = [
   },
   { path: "/Auth", element: <AuthForm /> },
   { path: "/contact", element: <Contact /> },
+  { path: "/about-us", element: <AboutUs /> },
   { path: "/logout" },
 ];
 
