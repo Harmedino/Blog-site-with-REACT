@@ -6,6 +6,7 @@ import AuthForm from "./AuthForm";
 import Contact from "./Contact";
 import AboutUs from "./AboutUs";
 import Profile from "./profile/Profile";
+import Profilepage from "./profile/Profilepage";
 
 const routes = [
   { path: "/:id?", element: <CreateBlog /> },
@@ -19,7 +20,11 @@ const routes = [
   { path: "/Auth", element: <AuthForm /> },
   { path: "/contact", element: <Contact /> },
   { path: "/about-us", element: <AboutUs /> },
-  { path: "/profile", element: <Profile /> },
+  {
+    path: "/profile",
+    element: <Profile />,
+    children: [{ index: true, element: <Profilepage /> }],
+  },
   { path: "/logout" },
 ];
 

@@ -1,12 +1,13 @@
 /* Sidebar.module.css */
 
 .sidebar {
-  width: 200px;
+  width: 100%;
   background-color: #f1356d;
   color: #fff;
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  height: 100%;
 }
 
 .sidebar ul {
@@ -32,7 +33,6 @@
 @media screen and (max-width: 768px) {
   .sidebar {
     height: 20vh;
-    width: 100%;
     margin-bottom: 10px;
   }
   .sidebar ul {
