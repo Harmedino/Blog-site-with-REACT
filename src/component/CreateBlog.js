@@ -36,7 +36,10 @@ const CreateBlog = () => {
       blog[name] = value;
     });
 
-    console.log(blog);
+    console.log(formData.get("title"));
+    console.log(formData.get("date"));
+
+    console.log(formData);
 
     setPending(true);
 
@@ -44,7 +47,7 @@ const CreateBlog = () => {
       if (!data) {
         const response = await axios.post(
           "http://localhost:5000/sendPost",
-          blog,
+          formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
           }
@@ -59,7 +62,7 @@ const CreateBlog = () => {
       } else {
         const response = await axios.patch(
           `http://localhost:5000/update/${data._id}`,
-          blog,
+          formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
           }
@@ -126,7 +129,7 @@ const CreateBlog = () => {
             placeholder="Enter blog title"
           />
           <label>Publication Date:</label>
-          <input type="date" name="publicationDate" />
+          <input type="date" name="date" />
 
           <input type="file" name="image" />
           {!pending && !data && <button>Add Blog</button>}
