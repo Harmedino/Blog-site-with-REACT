@@ -7,6 +7,7 @@ const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState();
   const [fail, setFail] = useState();
   const [pending, setPending] = useState(true);
+  const [image, setImage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,12 +17,15 @@ const DisplayBlogs = () => {
   async function fetching() {
     try {
       const { data } = await axios.get("http://localhost:5000/getBlog");
-
+      console.log(data);
+      // setImage(data[2].image.data.image);
       setBlogs(data);
+      console.log();
     } catch (error) {
       setFail(error.message);
     } finally {
       setPending(false);
+      // console.log(image);
     }
   }
 
@@ -31,9 +35,12 @@ const DisplayBlogs = () => {
         {pending && <div> Loading... </div>}
         {fail && <div>{fail}</div>}
         {blogs &&
-          blogs.map((blogs) => (
+          blogs.map((blogs, index) => (
             <div className="blog-post" key={blogs._id}>
-              <img src="blog-image.jpg" alt="Blog Post" />
+              <img
+                src={`http://localhost:5000/uploads/${blogs.image.data}`}
+                alt="Blog Post"
+              />
               <h2>{blogs.title}</h2>
               <p> {blogs.body.slice(0, 200)}...</p>
               <Link to={"more/" + blogs._id + "?" + blogs.title}>
@@ -41,19 +48,6 @@ const DisplayBlogs = () => {
               </Link>
             </div>
           ))}
-        {/* {blogs &&
-        blogs.map((blogs) => (
-          <article key={blogs._id}>
-            <h2>{blogs.title}</h2>
-            <p>Written by {blogs.author}</p>
-            <div style={{ whiteSpace: "pre-line" }}>
-              {blogs.body.slice(0, 200)}...
-            </div>
-            <Link to={"more/" + blogs._id + "?" + blogs.title}>
-              Read more ...
-            </Link>
-          </article>
-        ))} */}
       </main>
     </div>
   );

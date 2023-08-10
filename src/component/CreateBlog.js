@@ -55,9 +55,10 @@ const CreateBlog = () => {
 
         setPending(false);
         setMessage(response.data.message);
+        console.log(response.data);
         setTimeout(() => {
           setMessage("");
-          navigate(`/blogList`);
+          // navigate(`/blogList`);
         }, 3000);
       } else {
         const response = await axios.patch(
@@ -69,7 +70,7 @@ const CreateBlog = () => {
         );
 
         console.log(response.data);
-        navigate(`/blogList`);
+        // navigate(`/blogList`);
         setPending(false);
       }
     } catch (error) {
