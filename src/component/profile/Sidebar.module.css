@@ -18,28 +18,62 @@
   padding-top: 2rem;
 }
 
-.sidebar ul li {
+.sidebar ul a {
   color: white;
+  text-decoration: none;
   font-weight: 600;
   margin-top: 1.7rem;
-  border: none !important;
   text-align: center;
   cursor: pointer;
+  display: block;
+  padding: 0.5rem;
+  transition: border-left-color 0.3s ease-in-out;
 }
-.sidebar ul li:hover {
-  background-color: transparent;
+
+.sidebar ul a:hover {
+  border-left: 4px solid #fff;
+  border-radius: 5px;
+}
+.active {
+  border-left: 4px solid #fff;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 768px) {
   .sidebar {
-    height: 20vh;
+    height: 30vh;
     margin-bottom: 10px;
   }
   .sidebar ul {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center !important;
     justify-content: space-around;
     padding: 0 !important;
+    list-style: none;
+    margin: 0;
+  }
+
+  .sidebar ul a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 1.7rem;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    padding: 0.3rem;
+    border: 2px solid transparent;
+    transition: border-left-color 0.3s ease-in-out;
+  }
+
+  .sidebar ul a:hover {
+    background-color: white;
+    color: #f1356d;
+  }
+  .active {
+    background-color: white;
+    color: #f1356d !important;
   }
 }

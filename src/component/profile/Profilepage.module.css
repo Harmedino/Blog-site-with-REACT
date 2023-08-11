@@ -1,0 +1,86 @@
+/* ProfileForm.module.css */
+.profileForm {
+  color: white;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-self: start;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  width: 30% !important;
+}
+.profileInfo {
+  width: 70%;
+  flex-direction: column;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileInfoList {
+  list-style-type: none;
+  margin-left: 20px;
+  padding: 0;
+}
+
+.profileInfoList li {
+  margin-bottom: 10px;
+}
+
+.profileInfo {
+  margin-top: 20px;
+}
+
+.editButton {
+  margin-top: 20px;
+}
+.profileData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.formGroup label {
+  font-weight: bold;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formGroup textarea {
+  resize: vertical;
+}
+
+.editButton {
+  margin-top: 20px;
+  background-color: #f1356d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editButton:hover {
+  background-color: #d11a53;
+}

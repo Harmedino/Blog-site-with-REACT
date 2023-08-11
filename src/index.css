@@ -33,7 +33,7 @@ code {
   margin: auto;
 }
 .space {
-  margin-top: 80px;
+  margin-top: 70px;
 }
 .content {
   max-width: 600px;
@@ -88,6 +88,7 @@ code {
   position: fixed;
   top: -40%;
   left: 0;
+  z-index: 6000;
 }
 
 .message.slideIn {
@@ -101,8 +102,14 @@ code {
 }
 
 @keyframes slideInFromTop {
-  to {
+  0% {
+    top: -40%;
+  }
+  50% {
     top: 0;
+  }
+  100% {
+    top: 100%;
   }
 }
 

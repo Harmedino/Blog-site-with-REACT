@@ -17,10 +17,7 @@ const DisplayBlogs = () => {
   async function fetching() {
     try {
       const { data } = await axios.get("http://localhost:5000/getBlog");
-      console.log(data);
-      // setImage(data[2].image.data.image);
       setBlogs(data);
-      console.log();
     } catch (error) {
       setFail(error.message);
     } finally {

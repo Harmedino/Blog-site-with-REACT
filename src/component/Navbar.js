@@ -1,26 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Navbar.module.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { activeUser } from "../lib/token";
+import { useContext, useEffect, useState } from "react";
 
-const Navbar = () => {
-  const [data, setData] = useState();
-  const navigate = useNavigate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const fetchData = async () => {
-      const user = await activeUser();
-      setData(user);
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+const Navbar = ({ message }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -46,26 +28,32 @@ const Navbar = () => {
                 Home
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-              >
-                Create blog
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/profile"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-              >
-                Profile
-              </NavLink>
-            </li>
+            {message ? (
+              <>
+                <li>
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
+                  >
+                    Create blog
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/profile"
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
+                  >
+                    Profile
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              " "
+            )}
             <li>
               <NavLink
                 to="/about-us"
@@ -86,7 +74,7 @@ const Navbar = () => {
                 Contact
               </NavLink>
             </li>
-            {!data ? (
+            {!message ? (
               <li>
                 <NavLink
                   to="/Auth?mode=login"
