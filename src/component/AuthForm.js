@@ -4,6 +4,7 @@ import classes from "./AuthForm.module.css";
 import { useState } from "react";
 import axios from "axios";
 import Message from "../UI/Message";
+import { useResponseData } from "../store/contex";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
@@ -14,6 +15,8 @@ function AuthForm() {
   const navigate = useNavigate();
 
   const [userdata, setUserData] = useState();
+
+  const ctx = useResponseData();
 
   function handleChange(e) {
     const name = e.target.name;
@@ -30,50 +33,8 @@ function AuthForm() {
   async function handleClick(event) {
     setIsLoading(true);
     event.preventDefault();
+    ctx.login(userdata, mode, navigate);
 
-    if (mode === "signup") {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:5000/register",
-          JSON.stringify(userdata),
-          config
-        );
-        console.log(data);
-        localStorage.setItem("authToken", data.token);
-
-        setMessage(data.message);
-        setTimeout(() => {
-          setMessage("");
-          navigate("/blogList");
-        }, 2000);
-      } catch (error) {
-        setMessage(error.response.data.error);
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      }
-    } else if (mode === "login") {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/login",
-          JSON.stringify(userdata),
-          config
-        );
-        console.log(response.data);
-        localStorage.setItem("authToken", response.data.token);
-        setMessage(response.data.message);
-        setTimeout(() => {
-          setMessage("");
-          navigate("/blogList");
-        }, 2000);
-      } catch (error) {
-        console.log();
-        setMessage(error.response.data.error);
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      }
-    }
     setIsLoading(false);
   }
 

@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./Profilepage.module.css";
+import ResponseDataContext from "../../store/contex";
+import { useNavigate } from "react-router-dom";
 
 const Profilepage = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [data, setData] = useState({});
+  const { message } = useContext(ResponseDataContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Message has changed:", message);
+    setData(message);
+    if (!message) {
+      navigate("/auth");
+    }
+  }, [message, navigate]);
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -17,10 +30,11 @@ const Profilepage = () => {
         />
         <ul className={styles.profileInfoList}>
           <li>
-            <i className="fa fa-envelope"></i> Email
+            <i className="fa fa-user"></i> {data.firstname}
           </li>
           <li>
-            <i className="fa fa-phone"></i> Phone Number
+            <i className="fa fa-phone"></i>{" "}
+            {data.phone ? data.phone : "Phone Number"}
           </li>
         </ul>
       </div>
@@ -35,59 +49,47 @@ const Profilepage = () => {
               type="text"
               className="form-control"
               id="firstnameValue"
-              value=""
+              value={data.firstname}
               disabled={!isEditing}
             />
           </div>
-          <div class={styles.formGroup}>
-            <label for="name">Last Name:</label>
+          <div className={styles.formGroup}>
+            <label htmlFor="name">Last Name:</label>
             <input
               type="text"
-              class="form-control"
               id="lastnameValue"
-              value=""
-              disabled
+              value={data.lastname}
+              disabled={!isEditing}
             />
           </div>
-          <div class={styles.formGroup}>
-            <label for="name">phone Number:</label>
+          <div className={styles.formGroup}>
+            <label htmlFor="name">phone Number:</label>
             <input
               type="text"
-              class="form-control"
               id="phoneValue"
-              value=""
-              disabled
+              value={data.phone ? data.phone : ""}
+              disabled={!isEditing}
             />
           </div>
-          <div class={styles.formGroup}>
-            <label for="username">username:</label>
+          <div className={styles.formGroup}>
+            <label htmlFor="username">username:</label>
             <input
               type="text"
-              class="form-control"
               id="usernameValue"
-              value=""
-              disabled
+              value={data.username}
+              disabled={!isEditing}
             />
           </div>
-          <div class={styles.formGroup}>
-            <label for="email">Email:</label>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email:</label>
             <input
               type="email"
-              class="form-control"
               id="userEmailValue"
-              value=""
-              disabled
+              value={data.email}
+              disabled={!isEditing}
             />
           </div>
-          <div class={styles.formGroup}>
-            <label for="address">Address:</label>
-            <textarea
-              class="form-control"
-              id="address"
-              rows="3"
-              disabled
-            ></textarea>
-          </div>
+
           <button
             type="button"
             className={`btn btn-primary ${styles.editButton}`}
