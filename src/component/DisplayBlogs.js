@@ -36,10 +36,10 @@ const DisplayBlogs = () => {
       return "today";
     } else if (timeDifferenceInSeconds < 3600) {
       const minutes = Math.floor(timeDifferenceInSeconds / 60);
-      return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
+      return "today";
     } else if (timeDifferenceInSeconds < 2592000) {
       const days = Math.floor(timeDifferenceInSeconds / 86400);
-      return `${days} ${days === 1 ? "day" : "days"} ago`;
+      return `${days} ${days === 1 ? "today" : "days"} ago`;
     } else {
       const monthNames = [
         "January",
@@ -62,7 +62,7 @@ const DisplayBlogs = () => {
 
   return (
     <div className="blog-details">
-      <HeaderBlog />
+      <HeaderBlog /> <h3 className="ourBlog"> Our Blog</h3> <hr />
       <main className="blog-list">
         {pending && <div>Loading...</div>}
         {fail && <div>{fail}</div>}
@@ -78,7 +78,7 @@ const DisplayBlogs = () => {
               <div className="blog-content">
                 <h2>{blog.title}</h2>
                 <p>{blog.body.slice(0, 200)}...</p>
-                <p>Publication Date: {formatPublicationDate(blog.date)}</p>
+                <p>{formatPublicationDate(blog.date)}</p>
                 <Link to={`more/${blog._id}?${blog.title}`}>Read more ...</Link>
               </div>
             </div>
