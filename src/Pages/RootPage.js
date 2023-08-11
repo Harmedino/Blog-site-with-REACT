@@ -7,7 +7,7 @@ const RootPage = () => {
   return (
     <div>
       <Navbar />
-      <main>
+      <main className="space">
         <Outlet></Outlet>
       </main>
 

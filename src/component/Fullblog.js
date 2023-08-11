@@ -9,7 +9,6 @@ const Fullblog = () => {
   const { id } = useParams();
   const [blog, setBlogs] = useState();
   const [fail, setFail] = useState();
-  const [pending, setPending] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,14 +16,25 @@ const Fullblog = () => {
   }, []);
 
   async function fetching() {
+    const token = getAuthToken();
     try {
-      const res = await fetch("http://localhost:5000/getBlog/" + id);
-      const data = await res.json();
-      setBlogs(data);
+      const res = await fetch("http://localhost:5000/getBlog/" + id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setBlogs(data);
+      } else {
+        // Handle non-OK response
+        const errorData = await res.json();
+        setFail(errorData.message);
+      }
     } catch (error) {
       setFail(error.message);
-    } finally {
-      setPending(false);
     }
   }
 

@@ -3,11 +3,14 @@ import "./HeaderBlog.css"; // Import your CSS file
 
 const HeaderBlog = () => {
   return (
-    <div className="home-container">
-      <header className="header">
-        <h1>My Awesome Blog</h1>
-        <p>Welcome to the place where words come to life!</p>
-      </header>
+    <div className="hero-container">
+      <div className="hero-content">
+        <h1>Welcome to Our Blog</h1>
+        <p>
+          Explore insightful articles and stay up to date with the latest
+          trends.
+        </p>
+      </div>
     </div>
   );
 };
