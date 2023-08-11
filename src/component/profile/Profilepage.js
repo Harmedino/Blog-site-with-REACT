@@ -1,21 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Profilepage.module.css";
-import ResponseDataContext from "../../store/contex";
 import { useNavigate } from "react-router-dom";
 
 const Profilepage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [data, setData] = useState({});
-  const { message } = useContext(ResponseDataContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log("Message has changed:", message);
-    setData(message);
-    if (!message) {
-      navigate("/auth");
-    }
-  }, [message, navigate]);
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);

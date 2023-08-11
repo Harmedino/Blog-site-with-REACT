@@ -2,6 +2,8 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./FullBlog.module.css";
+import axios from "axios";
+import { getAuthToken } from "../lib/token";
 
 const Fullblog = () => {
   const { id } = useParams();
@@ -60,16 +62,23 @@ const Fullblog = () => {
     }
   };
 
+  const token = getAuthToken();
+
   async function handleClick(id) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     try {
-      await fetch("http://localhost:5000/deleteBlog/" + id, {
-        method: "DELETE",
-      });
+      await axios.delete(`http://localhost:5000/deleteBlog/${id}`, config);
       navigate("/blogList");
     } catch (err) {
       alert(err.message);
     }
   }
+
   function handleEdit(id) {
     navigate(`/${id}`);
   }
@@ -90,8 +99,8 @@ const Fullblog = () => {
             <p>Publication Date: {formatPublicationDate(blog.date)}</p>
             <div style={{ whiteSpace: "pre-line" }}>{blog.body}</div>
             <div className={`${styles["button-container"]}`}>
-              {/* <button onClick={() => handleClick(blog._id)}>Delete</button>
-              <button onClick={() => handleEdit(blog._id)}>Edit</button> */}
+              <button onClick={() => handleClick(blog._id)}>Delete</button>
+              <button onClick={() => handleEdit(blog._id)}>Edit</button>
             </div>
           </div>
         </article>

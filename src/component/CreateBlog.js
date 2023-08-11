@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Message from "../UI/Message";
 import axios from "axios";
+import { getAuthToken } from "../lib/token";
 
 const CreateBlog = () => {
   const [pending, setPending] = useState(false);
@@ -28,53 +29,45 @@ const CreateBlog = () => {
     setData(data);
   }
 
+  const token = getAuthToken();
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`, // Add the authorization header
+    },
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(blogValue.current);
-    const blog = {};
-    formData.forEach((value, name) => {
-      blog[name] = value;
-    });
-
-    console.log(formData.get("title"));
-    console.log(formData.get("date"));
-
-    console.log(formData);
-
+    console.log(token);
     setPending(true);
 
-    try {
-      if (!data) {
-        const response = await axios.post(
-          "http://localhost:5000/sendPost",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
+    if (!data) {
+      const response = await axios.post(
+        "http://localhost:5000/sendPost",
+        formData,
+        config
+      );
 
-        setPending(false);
-        setMessage(response.data.message);
-        console.log(response.data);
-        setTimeout(() => {
-          setMessage("");
-          // navigate(`/blogList`);
-        }, 3000);
-      } else {
-        const response = await axios.patch(
-          `http://localhost:5000/update/${data._id}`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
-
-        console.log(response.data);
+      setPending(false);
+      setMessage(response.data.message);
+      console.log(response.data);
+      setTimeout(() => {
+        setMessage("");
         // navigate(`/blogList`);
-        setPending(false);
-      }
-    } catch (error) {
-      console.error("Error:", error);
+      }, 3000);
+    } else {
+      const response = await axios.patch(
+        `http://localhost:5000/update/${data._id}`,
+        formData,
+        config
+      );
+
+      console.log(response.data);
+      // navigate(`/blogList`);
+      setPending(false);
     }
   };
 
