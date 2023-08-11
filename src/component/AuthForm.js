@@ -4,7 +4,6 @@ import classes from "./AuthForm.module.css";
 import { useState } from "react";
 import axios from "axios";
 import Message from "../UI/Message";
-import { useResponseData } from "../store/contex";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
@@ -14,15 +13,28 @@ function AuthForm() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const [userdata, setUserData] = useState();
+  const initialFormData = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    username: "",
+    password: "",
+  };
 
-  const ctx = useResponseData();
+  const [userdata, setUserData] = useState(initialFormData);
 
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
     setUserData({ ...userdata, [name]: value });
   }
+
+  const handleResetPassword = () => {
+    setUserData((prevData) => ({
+      ...prevData,
+      password: "", // Reset only the password field
+    }));
+  };
 
   const config = {
     headers: {
@@ -31,11 +43,53 @@ function AuthForm() {
   };
 
   async function handleClick(event) {
-    setIsLoading(true);
     event.preventDefault();
-    ctx.login(userdata, mode, navigate);
+    setIsLoading(true);
+
+    axios.defaults.withCredentials = true;
+
+    try {
+      if (mode === "signup") {
+        try {
+          const { data } = await axios.post(
+            "http://localhost:5000/register",
+            JSON.stringify(userdata),
+            config
+          );
+          localStorage.setItem("authToken", data.token);
+          setMessage(data.message);
+
+          setTimeout(() => {
+            navigate("/Auth?mode=login");
+          }, 3000);
+        } catch (error) {
+          setMessage(error.message);
+          setTimeout(() => {
+            setMessage("");
+          }, 3000);
+        }
+      } else if (mode === "login") {
+        const response = await axios.post(
+          "http://localhost:5000/login",
+          JSON.stringify(userdata),
+          config
+        );
+        console.log(response.data);
+        setMessage(response.data.message);
+        setTimeout(() => {
+          // navigate("/blogList");
+          setMessage("");
+        }, 2000);
+      }
+    } catch (error) {
+      setMessage(error.response.data.error);
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+    }
 
     setIsLoading(false);
+    handleResetPassword();
   }
 
   return (
@@ -53,6 +107,7 @@ function AuthForm() {
                 type="text"
                 name="firstname"
                 required
+                value={userdata.firstname}
                 placeholder="fullname"
                 onChange={handleChange}
               />
@@ -63,6 +118,7 @@ function AuthForm() {
                 id="lastname"
                 type="text"
                 name="lastname"
+                value={userdata.lastname}
                 required
                 placeholder="fullname"
                 onChange={handleChange}
@@ -74,6 +130,7 @@ function AuthForm() {
                 id="username"
                 type="username"
                 name="username"
+                value={userdata.username}
                 required
                 placeholder="username"
                 onChange={handleChange}
@@ -87,6 +144,7 @@ function AuthForm() {
             id="email"
             type="email"
             name="email"
+            alue={userdata.email}
             required
             placeholder="Email"
             onChange={handleChange}
@@ -98,13 +156,17 @@ function AuthForm() {
             id="password"
             type="password"
             name="password"
+            value={userdata.password}
             required
             placeholder="password"
             onChange={handleChange}
           />
         </p>
         <div className={classes.actions}>
-          <Link to={`?mode=${isLogin ? "signup" : "login"}`}>
+          <Link
+            to={`?mode=${isLogin ? "signup" : "login"}`}
+            onClick={handleResetPassword}
+          >
             {isLogin ? "Create new user" : "Login"}
           </Link>
           <button>{isLoading ? "Saving" : "Save"}</button>

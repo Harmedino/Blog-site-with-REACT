@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Navbar.module.css";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = ({ message }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -28,7 +28,7 @@ const Navbar = ({ message }) => {
                 Home
               </NavLink>
             </li>
-            {message ? (
+            {!message ? (
               <>
                 <li>
                   <NavLink
