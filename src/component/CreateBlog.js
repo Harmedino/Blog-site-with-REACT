@@ -59,13 +59,17 @@ const CreateBlog = () => {
           navigate(`/blogList`);
         }, 3000);
       } catch (error) {
-        setMessage(error.message);
+        console.log(error.response.data.message);
+        setMessage(error.response.data.message);
         setTimeout(() => {
-          if (error.message === "Unauthorized. Token missing or invalid.") {
+          if (
+            error.response.data.message ===
+            "Unauthorized. Token missing or invalid."
+          ) {
             navigate(`/Auth?mode=login`);
           }
           setMessage("");
-        }, 3000);
+        }, 5000);
       }
     } else {
       try {
@@ -80,9 +84,12 @@ const CreateBlog = () => {
           navigate(`/blogList`);
         }, 3000);
       } catch (error) {
-        setMessage(error.message);
+        setMessage(error.response.data.message);
         setTimeout(() => {
-          if (error.message === "Unauthorized. Token missing or invalid.") {
+          if (
+            error.response.data.message ===
+            "Unauthorized. Token missing or invalid."
+          ) {
             navigate(`/Auth?mode=login`);
           }
           setMessage("");

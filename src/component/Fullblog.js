@@ -10,11 +10,34 @@ const Fullblog = () => {
   const [blog, setBlogs] = useState();
   const [fail, setFail] = useState();
   const navigate = useNavigate();
-
+  const [data, setData] = useState({});
+  const token = getAuthToken();
   useEffect(() => {
     fetching();
+    verifyToken();
   }, []);
 
+  const verifyToken = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/verifyToken",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.message.role === "User") {
+        setData("");
+      } else {
+        setData(response.data.message.role);
+      }
+    } catch (error) {
+      console.error("Token verification error:", error.message);
+    }
+  };
   async function fetching() {
     const token = getAuthToken();
     try {
@@ -72,8 +95,6 @@ const Fullblog = () => {
     }
   };
 
-  const token = getAuthToken();
-
   async function handleClick(id) {
     const config = {
       headers: {
@@ -109,8 +130,12 @@ const Fullblog = () => {
             <p>Publication Date: {formatPublicationDate(blog.date)}</p>
             <div style={{ whiteSpace: "pre-line" }}>{blog.body}</div>
             <div className={`${styles["button-container"]}`}>
-              <button onClick={() => handleClick(blog._id)}>Delete</button>
-              <button onClick={() => handleEdit(blog._id)}>Edit</button>
+              {data && (
+                <button onClick={() => handleClick(blog._id)}>Delete</button>
+              )}
+              {data && (
+                <button onClick={() => handleEdit(blog._id)}>Edit</button>
+              )}
             </div>
           </div>
         </article>
