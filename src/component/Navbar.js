@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { Form, NavLink, useNavigate } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 
@@ -74,31 +74,25 @@ const Navbar = ({ message }) => {
                 Contact
               </NavLink>
             </li>
-            {!message ? (
+
+            <li>
+              <NavLink
+                to="/Auth?mode=login"
+                className={({ isActive }) =>
+                  isActive ? classes.active : undefined
+                }
+              >
+                Auth
+              </NavLink>
+            </li>
+
+            <>
               <li>
-                <NavLink
-                  to="/Auth?mode=login"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                >
-                  Auth
-                </NavLink>
+                <Form action="/logout" method="post">
+                  <button> Logout</button>
+                </Form>
               </li>
-            ) : (
-              <>
-                <li>
-                  <NavLink
-                    to="/logout"
-                    className={({ isActive }) =>
-                      isActive ? classes.active : undefined
-                    }
-                  >
-                    Logout
-                  </NavLink>
-                </li>
-              </>
-            )}
+            </>
           </ul>
         </div>
       </div>
