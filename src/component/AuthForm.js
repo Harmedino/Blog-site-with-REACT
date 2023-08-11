@@ -77,7 +77,7 @@ function AuthForm() {
         console.log(response.data);
         setMessage(response.data.message);
         setTimeout(() => {
-          // navigate("/blogList");
+          navigate("/blogList");
           setMessage("");
         }, 2000);
       }

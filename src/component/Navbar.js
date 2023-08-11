@@ -1,9 +1,10 @@
-import { Form, NavLink, useNavigate } from "react-router-dom";
+import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
 import classes from "./Navbar.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Navbar = ({ message }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const token = useRouteLoaderData("root");
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -28,7 +29,7 @@ const Navbar = ({ message }) => {
                 Home
               </NavLink>
             </li>
-            {!message ? (
+            {token ? (
               <>
                 <li>
                   <NavLink
@@ -74,25 +75,25 @@ const Navbar = ({ message }) => {
                 Contact
               </NavLink>
             </li>
-
-            <li>
-              <NavLink
-                to="/Auth?mode=login"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
-              >
-                Auth
-              </NavLink>
-            </li>
-
-            <>
+            {!token && (
+              <li>
+                <NavLink
+                  to="/Auth?mode=login"
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                >
+                  Auth
+                </NavLink>
+              </li>
+            )}
+            {token && (
               <li>
                 <Form action="/logout" method="post">
                   <button> Logout</button>
                 </Form>
               </li>
-            </>
+            )}
           </ul>
         </div>
       </div>
