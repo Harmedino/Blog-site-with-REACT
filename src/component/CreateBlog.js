@@ -45,30 +45,51 @@ const CreateBlog = () => {
     setPending(true);
 
     if (!data) {
-      const response = await axios.post(
-        "http://localhost:5000/sendPost",
-        formData,
-        config
-      );
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/sendPost",
+          formData,
+          config
+        );
 
-      setPending(false);
-      setMessage(response.data.message);
-      console.log(response.data);
-      setTimeout(() => {
-        setMessage("");
-        // navigate(`/blogList`);
-      }, 3000);
+        setMessage(response.data.message);
+        console.log(response.data);
+        setTimeout(() => {
+          setMessage("");
+          navigate(`/blogList`);
+        }, 3000);
+      } catch (error) {
+        setMessage(error.message);
+        setTimeout(() => {
+          if (error.message === "Unauthorized. Token missing or invalid.") {
+            navigate(`/Auth?mode=login`);
+          }
+          setMessage("");
+        }, 3000);
+      }
     } else {
-      const response = await axios.patch(
-        `http://localhost:5000/update/${data._id}`,
-        formData,
-        config
-      );
-
-      console.log(response.data);
-      // navigate(`/blogList`);
-      setPending(false);
+      try {
+        const response = await axios.patch(
+          `http://localhost:5000/update/${data._id}`,
+          formData,
+          config
+        );
+        setMessage(response.data.message);
+        setTimeout(() => {
+          setMessage("");
+          navigate(`/blogList`);
+        }, 3000);
+      } catch (error) {
+        setMessage(error.message);
+        setTimeout(() => {
+          if (error.message === "Unauthorized. Token missing or invalid.") {
+            navigate(`/Auth?mode=login`);
+          }
+          setMessage("");
+        }, 3000);
+      }
     }
+    setPending(false);
   };
 
   return (
