@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import HeaderBlog from "./HeaderBlog";
 
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState();
@@ -32,7 +33,7 @@ const DisplayBlogs = () => {
     const timeDifferenceInSeconds = (currentDate - publicationDate) / 1000;
 
     if (timeDifferenceInSeconds < 60) {
-      return "just now";
+      return "today";
     } else if (timeDifferenceInSeconds < 3600) {
       const minutes = Math.floor(timeDifferenceInSeconds / 60);
       return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
@@ -61,6 +62,7 @@ const DisplayBlogs = () => {
 
   return (
     <div className="blog-details">
+      <HeaderBlog />
       <main className="blog-list">
         {pending && <div>Loading...</div>}
         {fail && <div>{fail}</div>}

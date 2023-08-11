@@ -111,16 +111,12 @@ const CreateBlog = () => {
             placeholder="Enter blog title"
           />
           <label>Category:</label>
-          <select
-            required
-            name="category"
-            defaultValue={data ? data.category : ""}
-          >
+          <select required name="category">
             <option value="" disabled>
               Select a category
             </option>
             {categories.map((category) => (
-              <option key={category} value={category}>
+              <option key={category} defaultValue={data ? data.category : ""}>
                 {category}
               </option>
             ))}
@@ -144,9 +140,14 @@ const CreateBlog = () => {
             placeholder="Enter blog title"
           />
           <label>Publication Date:</label>
-          <input type="date" name="date" />
+          <input type="date" name="date" defaultValue={data ? data.date : ""} />
 
-          <input type="file" name="image" />
+          <input
+            type="file"
+            name="image"
+            required
+            defaultValue={data ? data.image.data : ""}
+          />
           {!pending && !data && <button>Add Blog</button>}
           {!pending && data && <button>Update Blog</button>}
           {pending && !data && <button>Add Blog ...</button>}
