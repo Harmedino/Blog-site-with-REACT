@@ -69,13 +69,13 @@ ul li {
     width: 20%;
   }
 }
-@media (max-width: 890px) {
+@media (max-width: 927px) {
   .links {
     width: 75%;
   }
 }
 
-@media (max-width: 815px) {
+@media (max-width: 874px) {
   .hamburgerMenu {
     display: inherit;
   }
