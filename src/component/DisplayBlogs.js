@@ -1,15 +1,13 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import HeaderBlog from "./HeaderBlog";
 
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState();
   const [fail, setFail] = useState();
   const [pending, setPending] = useState(true);
-  const [image, setImage] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetching();
