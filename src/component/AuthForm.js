@@ -4,6 +4,7 @@ import classes from "./AuthForm.module.css";
 import { useState } from "react";
 import axios from "axios";
 import Message from "../UI/Message";
+import { publicRequest } from "../request";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
@@ -12,6 +13,8 @@ function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  
+  const publicReq = publicRequest();
 
   const initialFormData = {
     firstname: "",
@@ -51,12 +54,11 @@ function AuthForm() {
     try {
       if (mode === "signup") {
         try {
-          const { data } = await axios.post(
-            "http://localhost:5000/register",
+          const { data } = await publicReq.post(
+            "/register",
             JSON.stringify(userdata),
             config
           );
-          localStorage.setItem("authToken", data.token);
           setMessage(data.message);
 
           setTimeout(() => {
@@ -69,8 +71,8 @@ function AuthForm() {
           }, 3000);
         }
       } else if (mode === "login") {
-        const response = await axios.post(
-          "http://localhost:5000/login",
+        const response = await publicReq.post(
+          "/login",
           JSON.stringify(userdata),
           config
         );

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "./FullBlog.module.css";
 import axios from "axios";
 import { getAuthToken } from "../lib/token";
+import { publicRequest } from "../request";
 
 const Fullblog = () => {
   const { id } = useParams();
@@ -12,6 +13,8 @@ const Fullblog = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({});
   const token = getAuthToken();
+  
+  const publicReq = publicRequest();
   useEffect(() => {
     fetching();
     verifyToken();
@@ -19,8 +22,8 @@ const Fullblog = () => {
 
   const verifyToken = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/verifyToken",
+      const response = await publicReq.post(
+        "/verifyToken",
         {},
         {
           headers: {
@@ -41,7 +44,7 @@ const Fullblog = () => {
   async function fetching() {
     const token = getAuthToken();
     try {
-      const res = await fetch("http://localhost:5000/getBlog/" + id, {
+      const res = await publicReq.get("/getBlog/" + id, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -52,7 +55,6 @@ const Fullblog = () => {
         const data = await res.json();
         setBlogs(data);
       } else {
-        // Handle non-OK response
         const errorData = await res.json();
         setFail(errorData.message);
       }
@@ -119,7 +121,7 @@ const Fullblog = () => {
         <article>
           <div className={`${styles["blog-image"]}`}>
             <img
-              src={`http://localhost:5000/uploads/${blog.image.data}`}
+              src={`${publicReq}/uploads/${blog.image.data}`}
               alt="Blog Post"
             />
           </div>
