@@ -4,6 +4,7 @@ import styles from "./Profilepage.module.css";
 
 import { getAuthToken } from "../../lib/token";
 import Message from "../../UI/Message";
+import { publicRequest } from "../../request";
 
 const Profilepage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -12,6 +13,7 @@ const Profilepage = () => {
   const [id, setId] = useState();
   const [message, setMessage] = useState();
 
+  const publicReq = publicRequest();
   const token = getAuthToken();
 
   useEffect(() => {
@@ -20,8 +22,8 @@ const Profilepage = () => {
 
   const verifyToken = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/verifyToken",
+      const response = await publicReq.post(
+        "/verifyToken",
         {},
         {
           headers: {
