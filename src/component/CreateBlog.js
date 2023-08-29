@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Message from "../UI/Message";
 import axios from "axios";
 import { getAuthToken } from "../lib/token";
+import { publicRequest } from "../request";
 
 const CreateBlog = () => {
   const [pending, setPending] = useState(false);
@@ -12,6 +13,8 @@ const CreateBlog = () => {
   const blogValue = useRef();
   const [categories, setCategories] = useState([]);
   const [message, setMessage] = useState("");
+  
+  const publicReq = publicRequest();
 
   const { id } = useParams();
   useEffect(() => {
@@ -46,11 +49,8 @@ const CreateBlog = () => {
 
     if (!data) {
       try {
-        const response = await axios.post(
-          "http://localhost:5000/sendPost",
-          formData,
-          config
-        );
+
+        const response = await publicReq.post("/sendPost", formData, config);
 
         setMessage(response.data.message);
         console.log(response.data);
@@ -74,7 +74,7 @@ const CreateBlog = () => {
     } else {
       try {
         const response = await axios.patch(
-          `http://localhost:5000/update/${data._id}`,
+          `${publicReq}/update/${data._id}`,
           formData,
           config
         );

@@ -13,7 +13,7 @@ const RootPage = () => {
     }
     setTimeout(() => {
       submit(null, { action: "/logout", method: "post" });
-    }, 2 * 60 * 60 * 1000);
+    }, 2 * 60 * 60 * 2000);
   }, [token, submit]);
 
   return (
