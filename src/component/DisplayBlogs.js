@@ -1,13 +1,16 @@
-import axios from "axios";
+
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import HeaderBlog from "./HeaderBlog";
+import { publicRequest } from "../request";
 
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState();
   const [fail, setFail] = useState();
   const [pending, setPending] = useState(true);
+  
+  const publicReq = publicRequest();
 
   useEffect(() => {
     fetching();
@@ -15,13 +18,12 @@ const DisplayBlogs = () => {
 
   async function fetching() {
     try {
-      const { data } = await axios.get("http://localhost:5000/getBlog");
+      const { data } = await publicReq.get("/getBlog");
       setBlogs(data);
     } catch (error) {
       setFail(error.message);
     } finally {
       setPending(false);
-      // console.log(image);
     }
   }
   const formatPublicationDate = (date) => {
@@ -69,7 +71,7 @@ const DisplayBlogs = () => {
             <div className="blog-card" key={blog._id}>
               <div className="blog-image">
                 <img
-                  src={`http://localhost:5000/uploads/${blog.image.data}`}
+                  src={`${publicReq}/uploads/${blog.image.data}`}
                   alt="Blog Post"
                 />
               </div>
