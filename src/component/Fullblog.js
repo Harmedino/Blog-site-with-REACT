@@ -117,6 +117,7 @@ const Fullblog = () => {
   }
   return (
     <div className={styles["blog-details"]}>
+      {/* <h1>Technology</h1> */}
       {blog && (
         <article>
           <div className={`${styles["blog-image"]}`}>
@@ -125,7 +126,7 @@ const Fullblog = () => {
               alt="Blog Post"
             />
           </div>
-          <div className={`${styles["blog-content"]}`}>
+          <div className={`${styles["blog-content"]}`}> 
             <h2>{blog.title}</h2>
             <p>Written by {blog.author}</p>
             <p>Category: {blog.category}</p>

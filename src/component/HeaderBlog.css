@@ -1,66 +1,95 @@
-/* Reset some default styles */
-body,
-h1,
-h2,
-p {
-  margin: 0;
-  padding: 0;
-}
-
-/* Global styles */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
-}
-
-/* Header styles */
-.header {
-  background-color: #f1356d;
-  text-align: center;
-  padding: 2rem;
-}
-
-/* Main content styles */
-.blog-list {
-  width: 80%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  /* padding: 2rem; */
-}
-
-.blog-post {
-  width: 300px;
-  border: 1px solid #ccc;
-  margin: 1rem;
-  padding: 1rem;
-}
-
-.blog-post img {
+.hero-container{
   width: 100%;
-  height: auto;
+  height: 70vh;
+  background: linear-gradient(113.5deg, #000588 12.16%, rgba(6, 10, 107, 0) 129.37%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  
+}
+.eclipse{
+opacity: 0.7;
+  width: 250px;
+  height: 250px;
+  border-radius: 100%;
+  background: #9C662C80;
+  left: -100px !important;
+  position: absolute;
+  top: 70px;
+}
+.hero-body{
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: auto;
+}
+.hero-text{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2.7rem;
+}
+.hero-text h1{
+  color: #FFC700 !important;
+  font-size: 40px;
+  text-align: center;
+
+}
+.hero-text p{
+  font-family: Poppins;
+font-size: 18px;
+font-weight: 400;
+line-height: 22px;
+text-align: left;
+color:#FFC700;
+max-width: 330px;
+
+}
+.hero-image{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.hero-image img {
+  width: 400px;
+  height: 400px;
+mix-blend-mode: multiply;
 }
 
-.blog-post h2 {
-  font-size: 1.5rem;
-  margin: 1rem 0;
+@media(max-width:711px){
+  .hero-text h1{
+    font-size: 35px;
+  
+  }
+  .hero-image img {
+    width: 350px;
+    height: 350px;
+  mix-blend-mode: multiply;
+  }
 }
-
-.blog-post p {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.blog-post a {
-  display: inline-block;
-  background-color: #f1356d;
-  color: white;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-.blog-post a:hover {
-  background-color: #d81b5a;
+@media(max-width:612px){
+  .hero-body{
+    flex-direction: column !important;
+    margin-top: 90px !important;
+  }
+  .hero-text{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -80px !important;
+    
+  }
+  .hero-image{
+    display: none !important;
+  }
 }
