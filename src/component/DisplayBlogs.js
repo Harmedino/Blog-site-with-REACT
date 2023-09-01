@@ -61,8 +61,9 @@ const DisplayBlogs = () => {
   };
 
   return (
-    <div className="blog-details">
-      <HeaderBlog /> <h3 className="ourBlog"> Our Blog</h3> <hr />
+    <><HeaderBlog />
+      <div className="blog-details">
+      <h3 className="ourBlog"> Our Blog</h3> <hr />
       <main className="blog-list">
         {pending && <div>Loading...</div>}
         {fail && <div>{fail}</div>}
@@ -72,8 +73,7 @@ const DisplayBlogs = () => {
               <div className="blog-image">
                 <img
                   src={`${publicReq}/uploads/${blog.image.data}`}
-                  alt="Blog Post"
-                />
+                  alt="Blog Post" />
               </div>
               <div className="blog-content">
                 <h2>{blog.title}</h2>
@@ -84,7 +84,7 @@ const DisplayBlogs = () => {
             </div>
           ))}
       </main>
-    </div>
+    </div></>
   );
 };
 
