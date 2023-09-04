@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link,useRouteLoaderData } from "react-router-dom";
-import { publicRequest } from "../../request";
+import { publicRequest,BaseUrl } from "../../request";
 
 const Published = () => {
   const [blogs, setBlogs] = useState();
@@ -100,7 +100,7 @@ const Published = () => {
             <div className="blog-card" key={blog._id}>
               <div className="blog-image">
                 <img
-                  src={`${publicReq}/uploads/${blog.image.data}`}
+                  src={`${BaseUrl}uploads/${blog.image.data}`}
                   alt="Blog Post"
                 />
               </div>
