@@ -65,7 +65,7 @@ function AuthForm() {
             navigate("/Auth?mode=login");
           }, 3000);
         } catch (error) {
-          setMessage(error.message);
+          setMessage(error.response.data.message);
           setTimeout(() => {
             setMessage("");
           }, 3000);
@@ -76,7 +76,6 @@ function AuthForm() {
           JSON.stringify(userdata),
           config
         );
-        console.log(response.data);
         setMessage(response.data.message);
         setTimeout(() => {
           navigate("/blogList");
@@ -84,7 +83,7 @@ function AuthForm() {
         }, 2000);
       }
     } catch (error) {
-      setMessage(error.response.data.error);
+      setMessage(error.response.data.message);
       setTimeout(() => {
         setMessage("");
       }, 3000);

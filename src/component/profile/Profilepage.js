@@ -10,10 +10,10 @@ const Profilepage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [data, setData] = useState({});
   const inputValue = useRef();
-  const [id, setId] = useState();
   const [message, setMessage] = useState();
-
+  
   const publicReq = publicRequest();
+  const [id, setId] = useState();
   const token = getAuthToken();
 
   useEffect(() => {

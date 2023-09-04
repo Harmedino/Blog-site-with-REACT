@@ -17,45 +17,45 @@ const Fullblog = () => {
   const publicReq = publicRequest();
   useEffect(() => {
     fetching();
-    verifyToken();
+    // verifyToken();
   }, []);
 
-  const verifyToken = async () => {
-    try {
-      const response = await publicReq.post(
-        "/verifyToken",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.data.message.role === "User") {
-        setData("");
-      } else {
-        setData(response.data.message.role);
-      }
-    } catch (error) {
-      console.error("Token verification error:", error.message);
-    }
-  };
+  // const verifyToken = async () => {
+  //   try {
+  //     const response = await publicReq.post(
+  //       "/verifyToken",
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     if (response.data.message.role === "User") {
+  //       setData("");
+  //     } else {
+  //       setData(response.data.message.role);
+  //     }
+  //   } catch (error) {
+  //     console.error("Token verification error:", error.message);
+  //   }
+  // };
   async function fetching() {
     const token = getAuthToken();
     try {
-      const res = await publicReq.get("/getBlog/" + id, {
+      const response = await publicReq.get(`http://localhost:5000/getBlog/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-
-      if (res.ok) {
-        const data = await res.json();
+  
+      if (response.status === 200) {
+        const data = response.data;
         setBlogs(data);
       } else {
-        const errorData = await res.json();
+        const errorData = response.data;
         setFail(errorData.message);
       }
     } catch (error) {
@@ -125,7 +125,7 @@ const Fullblog = () => {
               alt="Blog Post"
             />
           </div>
-          <div className={`${styles["blog-content"]}`}>
+          <div className={`${styles["blog-content"]}`}> 
             <h2>{blog.title}</h2>
             <p>Written by {blog.author}</p>
             <p>Category: {blog.category}</p>

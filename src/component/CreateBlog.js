@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Message from "../UI/Message";
-import axios from "axios";
 import { getAuthToken } from "../lib/token";
 import { publicRequest } from "../request";
 
@@ -13,10 +12,12 @@ const CreateBlog = () => {
   const blogValue = useRef();
   const [categories, setCategories] = useState([]);
   const [message, setMessage] = useState("");
-  
+  const token = getAuthToken()
   const publicReq = publicRequest();
-
   const { id } = useParams();
+  const [userName, setuserName] = useState('')
+
+  
   useEffect(() => {
     const fetchedCategories = ["Technology", "Travel", "Fashion"];
     setCategories(fetchedCategories);
@@ -26,13 +27,44 @@ const CreateBlog = () => {
   }, [id]);
 
   async function getIndex() {
-    const response = await fetch("http://localhost:5000/getBlog/" + id);
-    const data = await response.json();
-
-    setData(data);
+  
+    try {
+      const response = await publicReq.get(`http://localhost:5000/getBlog/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const data = response.data;
+      setData(data);
+    } catch (error) {
+      // Handle any errors here
+      console.error("Error fetching data:", error.message);
+    }
   }
 
-  const token = getAuthToken();
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
+  const verifyToken = async () => {
+    try {
+      const response = await publicReq.post(
+        "/verifyToken",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setuserName(response.data.message);
+    } catch (error) {
+      console.error("Token verification error:", error.message);
+    }
+  };
 
   const config = {
     headers: {
@@ -44,8 +76,8 @@ const CreateBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(blogValue.current);
-    console.log(token);
     setPending(true);
+    formData.append("authorId", userName._id);
 
     if (!data) {
       try {
@@ -56,10 +88,9 @@ const CreateBlog = () => {
         console.log(response.data);
         setTimeout(() => {
           setMessage("");
-          navigate(`/blogList`);
+          navigate(`/profile/published`);
         }, 3000);
       } catch (error) {
-        console.log(error.response.data.message);
         setMessage(error.response.data.message);
         setTimeout(() => {
           if (
@@ -73,8 +104,8 @@ const CreateBlog = () => {
       }
     } else {
       try {
-        const response = await axios.patch(
-          `${publicReq}/update/${data._id}`,
+        const response = await publicReq.patch(
+          `/update/${id}`,
           formData,
           config
         );
@@ -138,13 +169,13 @@ const CreateBlog = () => {
             placeholder="Write your blog content"
           ></textarea>
 
-          <label>Author</label>
+          <label>Author : {userName.username}</label>
           <input
-            type="text"
+            type="hidden"
             required
             name="author"
-            defaultValue={data ? data.author : ""}
-            placeholder="Enter blog title"
+            defaultValue={data ? data.author : userName.username}
+            
           />
           <label>Publication Date:</label>
           <input type="date" name="date" defaultValue={data ? data.date : ""} />

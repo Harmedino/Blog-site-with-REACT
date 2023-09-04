@@ -1,6 +1,6 @@
 /* Footer.module.css */
 .footer {
-  background-color: #f1356d;
+  background-color: #060A6B;
   color: white;
   padding: 3rem 0;
 }
@@ -10,25 +10,48 @@
   margin: auto;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start !important;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 4rem;
   color: white !important;
+}
+.footerContent h1 {
+  outline: white !important;
+  font-size: 28px;
+  font-weight: 600;
+  color: #060A6B !important;
 }
 
 .footerColumn {
-  flex: 1;
+  flex: 4;
   max-width: 300px;
-  margin-bottom: 2rem;
+  margin-bottom: 0.4rem;  
+}
+.footerColumn select{
+  padding: 5px;
+  border-radius: 3px;
+  width: 100px;
+  outline: white;
+}
+
+.vector{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.vector span {
+  margin-right: 10px;
+  font-size: 12px;
 }
 
 .footerColumn h3 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-bottom: 1rem;
-  color: white !important;
+  color: #FFC700 !important;
 }
 
 .footerColumn p {
-  font-size: 1rem;
+  font-size: 0.7rem;
   margin-bottom: 1rem;
   color: white !important;
 }
@@ -39,8 +62,9 @@
 }
 
 .footerColumn ul li {
-  font-size: 1rem;
+  font-size: 0.7rem;
   margin-bottom: 0.5rem;
+  letter-spacing: 1px;
   color: white !important;
 }
 
@@ -49,11 +73,18 @@
   margin-top: 2rem;
   font-size: 0.8rem;
   color: white !important;
+  margin: 1rem auto;
+}
+ hr{
+  width: 80%;
+  margin-bottom: 20px;
 }
 
 /* Responsive Styles */
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .footerContent {
     flex-direction: column;
+    align-items: center;
+    border: 1px solid red;
   }
-}
+} */

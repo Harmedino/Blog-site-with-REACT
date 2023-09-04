@@ -19,10 +19,9 @@ const RootPage = () => {
   return (
     <div>
       <Navbar />
-      <main className="space">
+      <main >
         <Outlet></Outlet>
       </main>
-
       <Footer />
     </div>
   );

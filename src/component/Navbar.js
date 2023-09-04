@@ -5,6 +5,7 @@ import { useState } from "react";
 const Navbar = ({ message }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const token = useRouteLoaderData("root");
+  // console.log(token)
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -13,7 +14,7 @@ const Navbar = ({ message }) => {
   return (
     <nav className={classes.navbar}>
       <div className={classes.navContainer}>
-        <h1>Harmedino</h1>
+        <h2>Harmedino</h2>
         <div className={classes.hamburgerMenu} onClick={handleMenuToggle}>
           <i className={`fas fa-bars`}></i>
         </div>
@@ -88,9 +89,9 @@ const Navbar = ({ message }) => {
               </li>
             )}
             {token && (
-              <li>
+              <li >
                 <Form action="/logout" method="post">
-                  <button> Logout</button>
+                  <button className={classes.logout}> Logout</button>
                 </Form>
               </li>
             )}
