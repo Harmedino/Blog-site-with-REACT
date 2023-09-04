@@ -10,7 +10,7 @@ fieldset {
 }
 .form label {
   font-size: 18px;
-  color: #f1356d;
+  color: #060A6B;
   letter-spacing: 2px;
 }
 
@@ -43,7 +43,7 @@ fieldset {
   border-radius: 4px;
   background-color: var(--color-gray-300);
   color: var(--color-gray-800);
-  border: 1px solid #f1356d;
+  border: 1px solid #060A6B;
 }
 
 .actions a {
@@ -51,20 +51,20 @@ fieldset {
   padding: 0.5rem 1.5rem;
   background-color: transparent;
   color: var(--color-gray-300);
-  border: 1px solid #f1356d;
+  border: 1px solid #060A6B;
   border-radius: 4px;
 }
 
 .actions button:hover {
-  background-color: #f1356d;
+  background-color: #060A6B;
   color: white;
 }
 
 .actions a:hover {
-  background-color: #f1356d;
+  background-color: #060A6B;
   color: white;
 }
 
 h1 {
-  color: #f1356d !important;
+  color: #060A6B !important;
 }
