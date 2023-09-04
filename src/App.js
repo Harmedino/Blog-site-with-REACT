@@ -45,6 +45,7 @@ const router = createBrowserRouter([
         ],
       },
       { path: "logout", action: LogoutAction },
+      { path: "/more/:id", element: <Fullblog />, loader: checkAuthLoader },
     ],
   },
 ]);
