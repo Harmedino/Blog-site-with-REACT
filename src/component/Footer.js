@@ -39,9 +39,9 @@ const Footer = () => {
 
       </div>
 
-
+      <hr />
       <p className={classes.copyRight}>
-        <hr />
+        
         &copy; 2023 Your Blog. All rights reserved.
       </p>
     </footer>

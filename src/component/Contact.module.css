@@ -34,7 +34,7 @@
 
 .contactForm h2 {
   margin-bottom: 1.5rem;
-  color: #f1356d;
+  color: #060A6B;
   text-align: center;
   text-transform: uppercase;
   margin-top: 40px;
@@ -69,7 +69,7 @@ form {
 }
 
 button {
-  background-color: #f1356d;
+  background-color: #060A6B;
   color: white;
   border: none;
   padding: 0.5rem 1rem;

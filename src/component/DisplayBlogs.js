@@ -62,29 +62,34 @@ const DisplayBlogs = () => {
 
   return (
     <><HeaderBlog />
-      <div className="blog-details">
-      <h3 className="ourBlog"> Our Blog</h3> <hr />
-      <main className="blog-list">
-        {pending && <div>Loading...</div>}
-        {fail && <div>{fail}</div>}
-        {blogs &&
-          blogs.map((blog, index) => (
-            <div className="blog-card" key={blog._id}>
-              <div className="blog-image">
-                <img
-                  src={`${publicReq}/uploads/${blog.image.data}`}
-                  alt="Blog Post" />
-              </div>
-              <div className="blog-content">
-                <h2>{blog.title}</h2>
-                <p>{blog.body.slice(0, 200)}...</p>
-                <p>{formatPublicationDate(blog.date)}</p>
-                <Link to={`more/${blog._id}?${blog.title}`}>Read more ...</Link>
-              </div>
+    <div className="blog-details">
+  <h3 className="ourBlog"> Our Blog</h3> <hr />
+  <main className="blog-list">
+    {pending && <div>Loading...</div>}
+    {fail && <div>{fail}</div>}
+    {blogs &&
+      blogs.map((blog, index) => (
+        // Check if the blog is published (publication is true)
+        blog.publication ? (
+          <div className="blog-card" key={blog._id}>
+            <div className="blog-image">
+              <img
+                src={`${publicReq}/uploads/${blog.image.data}`}
+                alt="Blog Post"
+              />
             </div>
-          ))}
-      </main>
-    </div></>
+            <div className="blog-content">
+              <h2>{blog.title}</h2>
+              <p>{blog.body.slice(0, 200)}...</p>
+              <p>{formatPublicationDate(blog.date)}</p>
+              <Link to={`more/${blog._id}?${blog.title}`}>Read more ...</Link>
+            </div>
+          </div>
+        ) : 'There are no approved blogs' // Render nothing if the blog is not published
+      ))}
+  </main>
+</div>
+</>
   );
 };
 
