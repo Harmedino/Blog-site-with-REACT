@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link,useRouteLoaderData } from "react-router-dom";
-import { publicRequest } from "../../request";
+import { publicRequest,BaseUrl } from "../../request";
+
 
 const Approved = () => {
   const [blogs, setBlogs] = useState();
@@ -60,16 +61,18 @@ const Approved = () => {
     <div className="blog-details">
       <h3 className="ourBlog">Our Blog</h3> <hr />
       <main className="blog-list">
-        {pending && <div>Loading...</div>}
+        {pending && <h1>Loading...</h1>}
         {fail && <div>{fail}</div>}
         {blogs &&
           blogs
             .filter((blog) => blog.publication) // Filter only approved blogs
-            .map((blog, index) => (
+          .map((blog, index) => (
+              
               <div className="blog-card" key={blog._id}>
                 <div className="blog-image">
+
                   <img
-                    src={`${publicReq}/uploads/${blog.image.data}`}
+                    src={`${BaseUrl}uploads/${blog.image.data}`}
                     alt="Blog Post"
                   />
                 </div>

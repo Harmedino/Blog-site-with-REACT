@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "./FullBlog.module.css";
 import axios from "axios";
 import { getAuthToken } from "../lib/token";
-import { publicRequest } from "../request";
+import { publicRequest, BaseUrl } from "../request";
 
 const Fullblog = () => {
   const { id } = useParams();
@@ -44,7 +44,7 @@ const Fullblog = () => {
   async function fetching() {
     const token = getAuthToken();
     try {
-      const response = await publicReq.get(`http://localhost:5000/getBlog/${id}`, {
+      const response = await publicReq.get(`/getBlog/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -121,7 +121,7 @@ const Fullblog = () => {
         <article>
           <div className={`${styles["blog-image"]}`}>
             <img
-              src={`${publicReq}/uploads/${blog.image.data}`}
+              src={`${BaseUrl}uploads/${blog.image.data}`}
               alt="Blog Post"
             />
           </div>
