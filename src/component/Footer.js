@@ -3,11 +3,11 @@ import React from "react";
 import classes from "./Footer.module.css"; 
 import image from '../image/Vector.png'
 
-const Footer = () => {
+const Footer = () => { 
   return (
     <footer className={classes.footer}>
       <div className={classes.footerContent}>
-        <div>
+        <div className={classes.logo}>
           <h1> Harmedino </h1>
         </div>
         <div className={classes.footerColumn}>
@@ -37,7 +37,7 @@ const Footer = () => {
           </select>
         </div>
 
-      </div>
+      </div> 
 
       <hr />
       <p className={classes.copyRight}>
