@@ -1,15 +1,18 @@
 .form {
-  max-width: 40rem;
-  margin: 2rem auto;
+  max-width: 40%;
+  margin: auto;
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .form h1 {
   text-align: center;
   text-transform: uppercase;
-}
-fieldset {
+  font-size: 26px;
 }
 .form label {
-  font-size: 18px;
+  font-size: 14px;
   color: #060A6B;
   letter-spacing: 2px;
 }
@@ -18,8 +21,8 @@ fieldset {
 .form input,
 .form textarea {
   display: block;
-  width: 80%;
-  padding: 5px;
+  width: 97%;
+  
 }
 
 .form input,
@@ -34,6 +37,9 @@ fieldset {
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
+}
+.form ::placeholder{
+  font-size: 12px;
 }
 
 .actions button {
@@ -67,4 +73,21 @@ fieldset {
 
 h1 {
   color: #060A6B !important;
+}
+
+@media(max-width:500px){
+.form{
+  max-width: 80%;
+}
+
+.form h1{
+  font-size: 14px;
+}
+
+}
+@media(max-width:400px){
+.actions{
+  flex-direction: column-reverse;
+}
+
 }
