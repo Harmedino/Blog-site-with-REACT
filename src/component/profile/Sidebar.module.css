@@ -2,7 +2,8 @@
 
 .sidebar {
   width: 100%;
-  background-color: #f1356d;
+  background-color: #060a6b !important;
+  ;
   color: #fff;
   display: flex;
   align-items: flex-start;

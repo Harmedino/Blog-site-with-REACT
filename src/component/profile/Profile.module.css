@@ -1,17 +1,19 @@
 .profilePage {
   display: flex;
-
+  margin-top: 70px;
   height: 110vh;
 }
 .aside {
   width: 20%;
   height: 100%;
+  
 }
 .content {
   min-height: 110vh !important;
   padding: 10px;
   width: 80%;
-  background-color: aqua;
+  background: linear-gradient(113.5deg, #000588 12.16%, rgba(6, 10, 107, 0) 90.37%);
+
 }
 
 @media (max-width: 768px) {
