@@ -82,7 +82,7 @@ const Profilepage = () => {
     <>
       {message && <Message message={message}></Message>}
       <div className={styles.profileForm}>
-        <div className={styles.profileHeader}>
+        {/* <div className={styles.profileHeader}>
           <img
             src="https://via.placeholder.com/150"
             className={styles.profilePicture}
@@ -97,7 +97,7 @@ const Profilepage = () => {
               {data.phone ? data.phone : "Phone Number"}
             </li>
           </ul>
-        </div>
+        </div> */}
 
         <div className={styles.profileInfo}>
           <h3>Profile Information</h3>
