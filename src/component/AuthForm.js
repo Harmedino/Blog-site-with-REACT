@@ -109,7 +109,7 @@ function AuthForm() {
                 name="firstname"
                 required
                 value={userdata.firstname}
-                placeholder="fullname"
+                placeholder="firstname"
                 onChange={handleChange}
               />
             </p>
@@ -121,7 +121,7 @@ function AuthForm() {
                 name="lastname"
                 value={userdata.lastname}
                 required
-                placeholder="fullname"
+                placeholder="lastname"
                 onChange={handleChange}
               />
             </p>
