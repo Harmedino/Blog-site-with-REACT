@@ -65,6 +65,22 @@ max-width: 390px;
 mix-blend-mode: multiply;
 }
 
+@media(max-width:832px){
+  .hero-image{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .hero-image img {
+    width: 500px;
+    height: 500px;
+  mix-blend-mode: multiply;
+  }
+}
+
 @media(max-width:711px){
   .hero-text h1{
     font-size: 35px;

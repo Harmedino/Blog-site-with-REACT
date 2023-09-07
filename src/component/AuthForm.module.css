@@ -28,6 +28,7 @@
 .form input,
 .form textarea {
   font: inherit;
+  font-size: 14px;
   padding: 0.25rem;
 }
 
@@ -37,6 +38,7 @@
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 30px;
 }
 .form ::placeholder{
   font-size: 12px;
