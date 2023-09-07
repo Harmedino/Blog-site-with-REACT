@@ -82,23 +82,7 @@ const Profilepage = () => {
     <>
       {message && <Message message={message}></Message>}
       <div className={styles.profileForm}>
-        {/* <div className={styles.profileHeader}>
-          <img
-            src="https://via.placeholder.com/150"
-            className={styles.profilePicture}
-            alt="Profile Picture"
-          />
-          <ul className={styles.profileInfoList}>
-            <li>
-              <i className="fa fa-user"></i> {data.firstname}
-            </li>
-            <li>
-              <i className="fa fa-phone"></i>{" "}
-              {data.phone ? data.phone : "Phone Number"}
-            </li>
-          </ul>
-        </div> */}
-
+      
         <div className={styles.profileInfo}>
           <h3>Profile Information</h3>
           <hr />
@@ -109,7 +93,7 @@ const Profilepage = () => {
                 type="text"
                 className="form-control"
                 name="firstnameValue"
-                defaultValue={data ? data.firstname : ""}
+                defaultValue={data ? data.firstname : "Nill"}
                 disabled={!isEditing}
                 required
               />
@@ -129,7 +113,7 @@ const Profilepage = () => {
               <input
                 type="text"
                 name="phoneValue"
-                defaultValue={data ? data.phone : ""}
+                defaultValue={data ? data.phone : "Nill"}
                 disabled={!isEditing}
                 required
               />

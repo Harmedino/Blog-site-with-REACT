@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Sidebar.module.css"; // Import your CSS module
 import { NavLink } from "react-router-dom";
+import profile from '../../image/Ellipse 2.png'
 
 const Sidebar = () => {
   const [selectedOption, setSelectedOption] = useState("profile");
@@ -11,14 +12,20 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
+      <div className={styles.eclipse}></div>
       <ul>
+        
         <li>
           <NavLink
             to="/profile"
             className={({ isActive }) => (isActive ? styles.active : undefined)}
             end
           >
-            Profile
+             <img
+            src={profile}
+            className={styles.profilePicture}
+            alt="Profile"
+          />
           </NavLink>
         </li>
         <li>

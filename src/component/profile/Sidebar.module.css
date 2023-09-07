@@ -3,31 +3,46 @@
 .sidebar {
   width: 100%;
   background-color: #060a6b !important;
-  ;
   color: #fff;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   height: 100%;
+  overflow: hidden;
+  position: absolute;
+  z-index: 10;
 }
+.eclipse{
+    width: 450px;
+    height: 450px;
+    border-radius: 100%;
+    background: #9C662C80; 
+    left: -210px !important;
+    position: absolute;
+    z-index: -1;
+    mix-blend-mode: overlay;
+  }
 
 .sidebar ul {
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   font-size: 1rem;
   padding-top: 2rem;
+}
+.profilePicture{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 
 .sidebar ul a {
   color: white;
   text-decoration: none;
-  font-weight: 600;
-  margin-top: 1.7rem;
-  text-align: center;
+  margin-top: 1.4rem;
+  text-align: left;
   cursor: pointer;
   display: block;
-  padding: 0.5rem;
   transition: border-left-color 0.3s ease-in-out;
 }
 
@@ -35,14 +50,10 @@
   border-left: 4px solid #fff;
   border-radius: 5px;
 }
-.active {
-  border-left: 4px solid #fff;
-  border-radius: 5px;
-}
 
 @media screen and (max-width: 768px) {
   .sidebar {
-    height: 30vh;
+    height: 10vh;
     margin-bottom: 10px;
   }
   .sidebar ul {

@@ -76,13 +76,17 @@ function AuthForm() {
           JSON.stringify(userdata),
           config
         );
-        setMessage(response.data.message);
-        setTimeout(() => {
-          navigate("/blogList");
-          setMessage("");
-        }, 2000);
+        if (response) {
+          setMessage(response.data.message);
+          setTimeout(() => {
+            navigate("/blogList");
+            setMessage("");
+          }, 2000);
+        }
+       
       }
     } catch (error) {
+      console.log(error)
       setMessage(error.response.data.message);
       setTimeout(() => {
         setMessage("");
