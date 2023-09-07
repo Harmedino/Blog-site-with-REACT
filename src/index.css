@@ -13,6 +13,18 @@ body {
   font-family: 'poppins';
   padding: 0;
 }
+::-webkit-scrollbar {
+  width: 6px; 
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #b9b3b3; /* Background color of the scrollbar handle */
+  border-radius: 6px; /* Rounded corners for the scrollbar handle */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Hover color for the scrollbar handle */
+}
 .body {
   width: 100%;
   margin: auto;
@@ -210,7 +222,7 @@ body {
   align-items: center;
   justify-content: space-around !important;
   min-height: 40vh;
-  background-color: #060A6B;
+  /* background-color: #060A6B; */
 }
 
 .blog-card {
