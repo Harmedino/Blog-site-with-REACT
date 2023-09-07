@@ -90,7 +90,7 @@ const Published = () => {
 
   return (
     <div className="blog-details">
-      <h3 className="ourBlog">Our Blog</h3> <hr />
+     
       <main className="blog-list">
         {pending && <div>Loading...</div>}
         {fail && <div>{fail}</div>}
