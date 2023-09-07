@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-self: start;
+  position: absolute;
 }
 
 .profileHeader {
@@ -16,15 +17,11 @@
 }
 .profileInfo {
   width: 70%;
+  margin: auto;
   flex-direction: column;
 }
 
-.profilePicture {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+
 
 .profileInfoList {
   list-style-type: none;
@@ -61,9 +58,14 @@
 .formGroup input,
 .formGroup textarea {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+  outline: #FFC700 !important;
+  border: #FFC700;
 }
 
 .formGroup textarea {
@@ -72,8 +74,9 @@
 
 .editButton {
   margin-top: 20px;
-  background-color: #f1356d;
+  background-color: #6265AE;
   color: white;
+  outline: #FFC700;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -82,5 +85,5 @@
 }
 
 .editButton:hover {
-  background-color: #d11a53;
+  background-color: #31359e;
 }
