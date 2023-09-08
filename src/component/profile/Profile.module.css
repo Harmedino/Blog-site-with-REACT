@@ -2,12 +2,13 @@
   display: flex;
   margin-top: 70px;
   height: 110vh;
+  /* overflow-x: hidden !important; */
 }
 .aside {
   width: 18%;
   height: 100%;
   position: fixed;
-  z-index: 3;
+  /* z-index: 3; */
 
 }
 .content {
@@ -16,7 +17,7 @@
   width: 82%;
   margin-left: 240px;
   background: linear-gradient(113.5deg, #000588 12.16%, rgba(6, 10, 107, 0) 90.37%);
-  
+  /* overflow-x: hidden !important; */
 }
 
 @media (max-width: 768px) {
