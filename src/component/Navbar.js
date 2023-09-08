@@ -39,10 +39,10 @@ const Navbar = ({ message }) => {
                       isActive ? classes.active : undefined
                     }
                   >
-                    Create blog
+                    Write
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink
                     to="/profile"
                     className={({ isActive }) =>
@@ -51,7 +51,7 @@ const Navbar = ({ message }) => {
                   >
                     Profile
                   </NavLink>
-                </li>
+                </li> */}
               </>
             ) : (
               " "
