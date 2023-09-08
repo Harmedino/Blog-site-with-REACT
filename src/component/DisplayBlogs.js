@@ -1,15 +1,15 @@
 
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import HeaderBlog from "./HeaderBlog";
 import { publicRequest,BaseUrl } from "../request";
+import Category from "./category/Category";
 
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState();
   const [fail, setFail] = useState();
   const [pending, setPending] = useState(true);
-  
+  const [Cate, setCate]= useState()
   const publicReq = publicRequest();
 
   useEffect(() => {
@@ -60,18 +60,23 @@ const DisplayBlogs = () => {
     }
   };
 
+  function handleFilter(event) {
+    setCate(event.target.innerText)
+}
+
   return (
     <><HeaderBlog />
-    <div className="blog-details">
-  <h3 className="ourBlog"> Our Blogs</h3> <hr  className="hr"/>  
-  <main className="blog-list">
+      <Category onClick={ handleFilter } />
+      <div className="blog-details"> 
+        <div className="container">
+      <h1 className="head">Recent Posts</h1>
+        <main className="blog-list">
+          
       {pending && <div>Loading...</div>}
       {fail && <div>{fail}</div>}
       {blogs && blogs.length === 0 && <div>No published blogs</div>}
       {blogs &&
-        blogs
-          .filter((blog) => blog.publication) // Filter only approved blogs
-          .map((blog, index) => (
+        blogs.map((blog, index) => (
             <div className="blog-card" key={blog._id}>
               <div className="blog-image">
                 <img
@@ -81,13 +86,15 @@ const DisplayBlogs = () => {
               </div>
               <div className="blog-content">
                 <h2>{blog.title}</h2>
-                <p>{blog.body.slice(0, 200)}...</p>
+                <p>{blog.body.slice(0, 30)}...</p>
                 <p>{formatPublicationDate(blog.date)}</p>
                 <Link to={`/more/${blog._id}?${blog.title}`}>Read more ...</Link>
               </div>
             </div>
           ))}
     </main>
+
+</div>
 </div>
 </>
   );

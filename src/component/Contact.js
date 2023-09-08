@@ -3,11 +3,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import classes from "./Contact.module.css";
-import {publicRequest} from '../request'
-
+import { publicRequest } from '../request';
+import Message from "../UI/Message";
 
 const Contact = () => {
   const publicReq = publicRequest();
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add a state for submission status
 
   const formik = useFormik({
     initialValues: {
@@ -23,13 +25,20 @@ const Contact = () => {
       message: Yup.string().required("Message is required")
     }),
     onSubmit: (values, { resetForm }) => {
-     publicReq.post("/api/contact", values) 
+      setIsSubmitting(true); // Set isSubmitting to true when the form is submitted
+      publicReq.post("/message", values)
         .then((response) => {
-          console.log("Form data submitted successfully:", response.data);
+          setMessage(response.data.message);
           resetForm();
         })
         .catch((error) => {
-          console.error("Error sending form data:", error);
+          setMessage(error.message);
+        })
+        .finally(() => {
+          setIsSubmitting(false); // Reset isSubmitting when submission is completed
+          setTimeout(() => {
+            setMessage("");
+          }, 3000);
         });
     }
   });
@@ -42,43 +51,43 @@ const Contact = () => {
           <p>Feel free to reach out to us for any inquiries or feedback.</p>
         </div>
       </section>
-
+      {message && <Message message={message}></Message>}
       
-    <section className={classes.contactForm}>
-      <h2>Contact Us</h2>
-      <form onSubmit={formik.handleSubmit}>
-        <div className={classes.formGroup}>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            {...formik.getFieldProps("name")}
-          />
-          
-        </div>
-        <div className={classes.formGroup}>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            {...formik.getFieldProps("email")}
-          />
-        </div>
-        <div className={classes.formGroup}>
-          <label htmlFor="message">Message:</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="4"
-            {...formik.getFieldProps("message")}
-          ></textarea>
-          
-        </div>
-        <button type="submit">Send Message</button>
-      </form>
-    </section>
+      <section className={classes.contactForm}>
+        <h2>Contact Us</h2>
+        <form onSubmit={formik.handleSubmit}>
+          <div className={classes.formGroup}>
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              {...formik.getFieldProps("name")}
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              {...formik.getFieldProps("email")}
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <label htmlFor="message">Message:</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              {...formik.getFieldProps("message")}
+            ></textarea>
+          </div>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Send Message"}
+          </button>
+        </form>
+      </section>
     </div>
   );
 };

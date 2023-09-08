@@ -33,17 +33,17 @@ const router = createBrowserRouter([
       { path: "/Auth", element: <AuthForm /> },
       { path: "/contact", element: <Contact /> },
       { path: "/about-us", element: <AboutUs /> },
-      {
-        path: "/profile",
-        element: <Profile />,
-        loader: checkAuthLoader,
-        children: [
-          { index: true, element: <Profilepage /> },
-          { path: "published", element: <Published /> },
-          { path: "approved", element: <Approved /> },
-          { path: "disapproved", element: <Disapproved /> },
-        ],
-      },
+      // {
+      //   path: "/profile",
+      //   element: <Profile />,
+      //   loader: checkAuthLoader,
+      //   children: [
+      //     { index: true, element: <Profilepage /> },
+      //     { path: "published", element: <Published /> },
+      //     { path: "approved", element: <Approved /> },
+      //     { path: "disapproved", element: <Disapproved /> },
+      //   ],
+      // },
       { path: "logout", action: LogoutAction },
       { path: "/more/:id", element: <Fullblog />, loader: checkAuthLoader },
     ],

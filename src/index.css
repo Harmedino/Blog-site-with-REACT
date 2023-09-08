@@ -34,7 +34,15 @@ body {
   margin: 40px auto;
   padding: 20px;
 }
-
+.head{
+  color: white !important;
+  font-size: 20px;
+  font-weight: 500;
+}
+.container{
+  width: 90%;
+  margin: auto;
+}
 /* blog previews / list */
 
 .blog-preview {

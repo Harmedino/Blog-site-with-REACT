@@ -19,7 +19,7 @@ const CreateBlog = () => {
 
   
   useEffect(() => {
-    const fetchedCategories = ["Technology", "Travel", "Fashion"];
+    const fetchedCategories = ["Technology", "Travel", "Fashion", 'Food','Lifestyle'];
     setCategories(fetchedCategories);
     if (id) {
       getIndex();
@@ -88,7 +88,7 @@ const CreateBlog = () => {
         console.log(response.data);
         setTimeout(() => {
           setMessage("");
-          navigate(`/profile/published`);
+          navigate(`/blogList`);
         }, 3000);
       } catch (error) {
         setMessage(error.response.data.message);

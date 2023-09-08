@@ -132,12 +132,12 @@ const Fullblog = () => {
             <p>Publication Date: {formatPublicationDate(blog.date)}</p>
             <div style={{ whiteSpace: "pre-line" }}>{blog.body}</div>
             <div className={`${styles["button-container"]}`}>
-              {data && (
+              {/* {data && (
                 <button onClick={() => handleClick(blog._id)}>Delete</button>
               )}
               {data && (
                 <button onClick={() => handleEdit(blog._id)}>Edit</button>
-              )}
+              )} */}
             </div>
           </div>
         </article>
