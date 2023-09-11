@@ -115,7 +115,7 @@ body {
 /* Add this to your CSS or create a new stylesheet */
 .create {
   max-width: 800px;
-  margin: 0 auto;
+  margin:70px auto 0 auto;
   padding: 2rem;
   background-color: #f9f9f9;
   border-radius: 5px;
@@ -154,7 +154,7 @@ body {
 }
 
 .create form button:hover {
-  background-color: #d81b5a;
+  background-color: #3b3e92;
 }
 
 /* New input field styling */

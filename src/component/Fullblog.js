@@ -2,47 +2,43 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./FullBlog.module.css";
-import axios from "axios";
 import { getAuthToken } from "../lib/token";
-import { publicRequest, BaseUrl } from "../request";
+import { publicRequest } from "../request";
+import Message from "../UI/Message";
 
 const Fullblog = () => {
   const { id } = useParams();
   const [blog, setBlogs] = useState();
-  const [fail, setFail] = useState();
-  const navigate = useNavigate();
   const [data, setData] = useState({});
+  const [message, setMessage] = useState();
+  // const navigate = useNavigate();
+  const [comment, setComment] = useState("");
   const token = getAuthToken();
-  
+
   const publicReq = publicRequest();
   useEffect(() => {
     fetching();
-    // verifyToken();
+    verifyToken();
   }, []);
 
-  // const verifyToken = async () => {
-  //   try {
-  //     const response = await publicReq.post(
-  //       "/verifyToken",
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     if (response.data.message.role === "User") {
-  //       setData("");
-  //     } else {
-  //       setData(response.data.message.role);
-  //     }
-  //   } catch (error) {
-  //     console.error("Token verification error:", error.message);
-  //   }
-  // };
+  const verifyToken = async () => {
+    try {
+      const response = await publicReq.post(
+        "/verifyToken",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setData(response.data.message.username);
+    } catch (error) {
+      console.error("Token verification error:", error.message);
+    }
+  };
   async function fetching() {
-    const token = getAuthToken();
     try {
       const response = await publicReq.get(`/getBlog/${id}`, {
         headers: {
@@ -50,16 +46,12 @@ const Fullblog = () => {
           "Content-Type": "application/json",
         },
       });
-  
-      if (response.status === 200) {
-        const data = response.data;
-        setBlogs(data);
-      } else {
-        const errorData = response.data;
-        setFail(errorData.message);
-      }
+
+      const data = response.data;
+      setBlogs(data);
+      console.log(blog);
     } catch (error) {
-      setFail(error.message);
+      setMessage("Network error occurred");
     }
   }
 
@@ -97,35 +89,65 @@ const Fullblog = () => {
     }
   };
 
-  async function handleClick(id) {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+  // async function handleClick(id) {
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
 
+  //   try {
+  //     await axios.delete(`http://localhost:5000/deleteBlog/${id}`, config);
+  //     navigate("/blogList");
+  //   } catch (err) {
+  //     alert(err.message);
+  //   }
+  // }
+
+  // function handleEdit(id) {
+  //   navigate(`/${id}`);
+  // }
+
+  function handleCommentChange(event) {
+    setComment(event.target.value);
+  }
+
+  async function handleSubmitComment() {
     try {
-      await axios.delete(`http://localhost:5000/deleteBlog/${id}`, config);
-      navigate("/blogList");
-    } catch (err) {
-      alert(err.message);
+      const response = await publicReq.post(
+        `/addComment/${id}`,
+        {
+          comment: comment,
+          author: data,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setComment("");
+      setMessage(response.data.message)
+    } catch (error) {
+      console.error("Error submitting comment:", error.message);
+    } finally {
+      fetching()
     }
   }
 
-  function handleEdit(id) {
-    navigate(`/${id}`);
-  }
   return (
+  
     <div className={styles["blog-details"]}>
+      {message && <Message message={message} />}
+      
       {blog && (
         <article>
           <div className={`${styles["blog-image"]}`}>
-            <img
-              src={`${BaseUrl}uploads/${blog.image.data}`}
-              alt="Blog Post"
-            />
+            <img src={blog.image} alt="Blog Post" />
           </div>
-          <div className={`${styles["blog-content"]}`}> 
+          <div className={`${styles["blog-content"]}`}>
             <h2>{blog.title}</h2>
             <p>Written by {blog.author}</p>
             <p>Category: {blog.category}</p>
@@ -138,7 +160,33 @@ const Fullblog = () => {
               {data && (
                 <button onClick={() => handleEdit(blog._id)}>Edit</button>
               )} */}
+              {token && (
+                <div className={styles["comment-section"]}>
+                  <h3>Comments</h3>
+                  <textarea
+                    value={comment}
+                    onChange={handleCommentChange}
+                    placeholder="Write your comment..."
+                  />
+                  <button onClick={handleSubmitComment}>Submit Comment</button>
+                </div>
+              )}
             </div>
+            {blog.comments.length !== 0 ? (
+              blog.comments.map((comment) => (
+                <div className={styles["comment"]} key={comment._id}>
+                  <p className={styles["comment-author"]}>
+                    By {comment.author}
+                  </p>
+                  <p>{comment.comment}</p>
+                  <p className={styles["comment-date"]}>
+                    Commented on {formatPublicationDate(comment.date)}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>no comments</p>
+            )}
           </div>
         </article>
       )}
