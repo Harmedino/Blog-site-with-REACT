@@ -1,0 +1,82 @@
+/* DisplayBlogs.module.css */
+.bloglist{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.bloglist h3{
+    color: white;
+}
+/* Blog Card Styles */
+.blogcard {
+    width:270px; 
+    margin: 10px;
+   
+    overflow: hidden;
+    transition: transform 0.2s;
+    height: 50vh;
+  }
+  
+  .blogimage {
+    width: 100%; 
+    height: 150px !important;
+  }
+  
+  .blogimage img {
+    width: 100%;
+    height: 150px;
+  }
+  /* Blog Content Styles */
+  .blogcontent {
+    width: 100%; 
+    background-color: #f9f9f9;
+    padding: 10px;
+   
+  }
+  .blogcontent h2{
+    font-size: 23px;
+    font-weight: 500;
+    color: #060A6B;
+    text-align: center;
+  }
+  
+  .blogcontent p{
+    font-size: 16px;
+    text-align: center;
+    color: #060A6B;
+  }
+  .blogdetails{
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  
+  .category {
+    color: yellow;
+    font-size: 14px;
+    margin-right: 10px;
+    font-weight: 400;
+  }
+  .blogdetails small{
+    color: #060A6B;
+  }
+  /* Read More Button Styles */
+  .readmore {
+    margin-top: 30px;
+    display: inline-block;
+    padding: 5px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: auto;
+    color: white;
+    background-color: #060A6B;
+  }
+  .readmore a{
+    text-decoration: none;
+  }
+  
+ 
+  

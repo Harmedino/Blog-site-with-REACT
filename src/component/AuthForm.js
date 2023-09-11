@@ -70,27 +70,34 @@ function AuthForm() {
             setMessage("");
           }, 3000);
         }
-      } else if (mode === "login") {
-        const response = await publicReq.post(
-          "/login",
-          JSON.stringify(userdata),
-          config
-        );
-        if (response) {
-          setMessage(response.data.message);
-          setTimeout(() => {
-            navigate("/blogList");
-            setMessage("");
-          }, 2000);
-        }
-       
-      }
+      }else if (mode === "login") {
+  const response = await publicReq.post(
+    "/login",
+    JSON.stringify(userdata),
+    config
+  );
+  if (response) {
+    console.log(response);
+
+    // Set the token to local storage
+    localStorage.setItem("token", response.data.token);
+
+    setMessage(response.data.message);
+    setTimeout(() => {
+      navigate("/blogList");
+      setMessage("");
+    }, 2000);
+  }
+}
+
     } catch (error) {
       console.log(error)
-      setMessage(error.response.data.message);
+      if (error.response.data) {
+        setMessage(error.response.data.message);
       setTimeout(() => {
         setMessage("");
       }, 3000);
+     }
     }
 
     setIsLoading(false);
@@ -118,6 +125,7 @@ function AuthForm() {
               />
             </p>
             <p>
+              
               <label htmlFor="fullname">Last Name:</label>
               <input
                 id="lastname"
