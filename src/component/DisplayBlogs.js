@@ -44,7 +44,7 @@ const DisplayBlogs = () => {
           <h1 className="head">Recent Posts</h1>
           <main className={classes.bloglist}>
             {pending && <h3>Loading...</h3>}
-            {fail && <div>{fail}</div>}
+            {fail && <h3>{fail}</h3>}
             {filteredBlogs.length === 0 ? <h3>No published blogs</h3> :
               (
                 filteredBlogs.map((blog) => (

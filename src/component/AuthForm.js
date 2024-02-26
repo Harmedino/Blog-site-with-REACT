@@ -92,7 +92,7 @@ function AuthForm() {
 
     } catch (error) {
       console.log(error)
-      if (error.response.data) {
+      if (error.response) {
         setMessage(error.response.data.message);
       setTimeout(() => {
         setMessage("");
