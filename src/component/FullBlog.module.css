@@ -1,6 +1,8 @@
 /* BlogDetails.module.css */
 
-
+.blog-details {
+  height: 70vh;
+}
 .blog-details article {
   background-color: #ffffff;
   border-radius: 10px;
