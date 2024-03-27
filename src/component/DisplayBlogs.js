@@ -4,6 +4,7 @@ import HeaderBlog from "./HeaderBlog";
 import { publicRequest } from "../request";
 import Category from "./category/Category";
 import classes from "./Display.module.css";
+import Review from "./Review";
 
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -73,6 +74,7 @@ const DisplayBlogs = () => {
           </main>
         </div>
       </div>
+      <Review/>
     </>
   );
 };

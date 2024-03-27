@@ -1,0 +1,61 @@
+/* Review.module.css */
+
+.reviewSection {
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: #060a68;
+}
+
+.reviewSection h2 {
+  color: white;
+}
+
+.reviewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.review {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.profileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-size: cover;
+}
+
+.rating {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: gold;
+}
+
+.reviewContent {
+  flex-grow: 1;
+}
+
+.review p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.review span {
+  font-style: italic;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .review {
+    flex: 1 1 calc(33.33% - 20px);
+  }
+}
