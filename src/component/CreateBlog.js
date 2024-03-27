@@ -188,7 +188,7 @@ const CreateBlog = () => {
           />
           {!pending && !data && <button>Add Blog</button>}
           {!pending && data && <button>Update Blog</button>}
-          {pending && !data && <button>Add Blog ...</button>}
+          {pending && !data && <button>Adding Blog ...</button>}
           {pending && data && <button>Updating Blog ...</button>}
         </form>
       </div>

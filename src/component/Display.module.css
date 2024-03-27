@@ -1,82 +1,97 @@
 /* DisplayBlogs.module.css */
-.bloglist{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
+
+.bloglist {
+  width: 100%;
+  display: flex;
+  align-items: flex-start; /* Adjusted alignment to start */
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
-.bloglist h3{
-    color: white;
-}
-/* Blog Card Styles */
+
 .blogcard {
-    width:270px; 
-    margin: 10px;
-   
-    overflow: hidden;
-    transition: transform 0.2s;
-    height: 50vh;
+  width: 270px;
+  margin: 10px;
+  overflow: hidden;
+  transition: transform 0.2s;
+  height: auto; /* Changed height to auto to prevent scrolling */
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+}
+
+.blogimage {
+  width: 100%;
+  height: 150px;
+  overflow: hidden; /* Added to ensure the image doesn't overflow */
+  border-top-left-radius: 10px; /* Rounded corners */
+  border-top-right-radius: 10px;
+}
+
+.blogimage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the entire container */
+}
+
+.blogcontent {
+  width: 100%;
+  background-color: #f9f9f9;
+  padding: 15px; /* Increased padding for better spacing */
+  border-bottom-left-radius: 10px; /* Rounded corners */
+  border-bottom-right-radius: 10px;
+}
+
+.blogcontent h2 {
+  font-size: 18px; /* Adjusted font size */
+  font-weight: 500;
+  color: #060a6b;
+  text-align: center;
+  margin-bottom: 10px; /* Added margin bottom for spacing */
+  padding-right: 20px;
+}
+
+.blogcontent p {
+  font-size: 14px; /* Adjusted font size */
+  text-align: center;
+  color: #060a6b;
+  margin-bottom: 15px; /* Added margin bottom for spacing */
+}
+
+.blogdetails {
+  text-align: center;
+}
+
+.category {
+  color: yellow;
+  font-size: 14px;
+  margin-right: 5px; /* Reduced margin right */
+  font-weight: 400;
+}
+
+.blogdetails small {
+  color: #060a6b;
+  font-size: 12px; /* Adjusted font size */
+}
+
+.readmore {
+  display: block;
+  width: fit-content; /* Adjusted width */
+  margin: 0 auto; /* Centered the button */
+  padding: 8px 16px; /* Adjusted padding */
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: white;
+  background-color: #060a6b;
+  border: none; /* Removed border */
+  border-radius: 5px; /* Added border radius */
+  text-decoration: none; /* Removed underline */
+}
+
+.readmore:hover {
+  background-color: #043058; /* Darker color on hover */
+}
+@media only screen and (max-width: 500px) {
+  .blogcard {
+    width: 90%;
   }
-  
-  .blogimage {
-    width: 100%; 
-    height: 150px !important;
-  }
-  
-  .blogimage img {
-    width: 100%;
-    height: 150px;
-  }
-  /* Blog Content Styles */
-  .blogcontent {
-    width: 100%; 
-    background-color: #f9f9f9;
-    padding: 10px;
-   
-  }
-  .blogcontent h2{
-    font-size: 23px;
-    font-weight: 500;
-    color: #060A6B;
-    text-align: center;
-  }
-  
-  .blogcontent p{
-    font-size: 16px;
-    text-align: center;
-    color: #060A6B;
-  }
-  .blogdetails{
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  
-  .category {
-    color: yellow;
-    font-size: 14px;
-    margin-right: 10px;
-    font-weight: 400;
-  }
-  .blogdetails small{
-    color: #060A6B;
-  }
-  /* Read More Button Styles */
-  .readmore {
-    margin-top: 30px;
-    display: inline-block;
-    padding: 5px 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: auto;
-    color: white;
-    background-color: #060A6B;
-  }
-  .readmore a{
-    text-decoration: none;
-  }
-  
- 
-  
+}

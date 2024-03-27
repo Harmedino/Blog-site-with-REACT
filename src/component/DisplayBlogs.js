@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import HeaderBlog from "./HeaderBlog";
-import { publicRequest} from "../request";
+import { publicRequest } from "../request";
 import Category from "./category/Category";
 import classes from "./Display.module.css";
 
@@ -45,33 +45,31 @@ const DisplayBlogs = () => {
           <main className={classes.bloglist}>
             {pending && <h3>Loading...</h3>}
             {fail && <h3>{fail}</h3>}
-            {filteredBlogs.length === 0 ? <h3>No published blogs</h3> :
-              (
-                filteredBlogs.map((blog) => (
-                  <div className={classes.blogcard} key={blog._id}>
-                    <div className={classes.blogimage}>
-                      <img
-                        src={blog.image}
-                        alt="Blog Post"
-                      />
-                    </div>
-                    <div className={classes.blogcontent}>
-                      <h2>{blog.title}</h2>
-                      <p>{blog.body.slice(0, 30)} ...</p>
-                      <div className={classes.blogdetails}>
-                        <span className={classes.category}>{blog.category}</span>
-                        <small>{blog.date}</small>
-                      </div>
-                      <Link
-                        to={`/more/${blog._id}?${blog.title}`}
-                        className={classes.readmore}
-                      >
-                        Read more
-                      </Link>
-                    </div>
+            {filteredBlogs.length === 0 && !fail && !pending ? (
+              <h3>No published blogs</h3>
+            ) : (
+              filteredBlogs.map((blog) => (
+                <div className={classes.blogcard} key={blog._id}>
+                  <div className={classes.blogimage}>
+                    <img src={blog.image} alt="Blog Post" />
                   </div>
-                ))
-              )}
+                  <div className={classes.blogcontent}>
+                    <h2>{blog.title}</h2>
+                    <p>{blog.body.slice(0, 30)} ...</p>
+                    <div className={classes.blogdetails}>
+                      <span className={classes.category}>{blog.category}</span>
+                      <small>{blog.date}</small>
+                    </div>
+                    <Link
+                      to={`/more/${blog._id}?${blog.title}`}
+                      className={classes.readmore}
+                    >
+                      Read more
+                    </Link>
+                  </div>
+                </div>
+              ))
+            )}
           </main>
         </div>
       </div>
