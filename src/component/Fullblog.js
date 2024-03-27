@@ -49,7 +49,7 @@ const Fullblog = () => {
 
       const data = response.data;
       setBlogs(data);
-      console.log(blog);
+      console.log(data);
     } catch (error) {
       setMessage("Network error occurred");
     }
