@@ -81,6 +81,12 @@ const CreateBlog = () => {
       },
     };
 
+    if (!userName._id) {
+      setMessage("Session not ready. Please wait a moment and try again.");
+      setPending(false);
+      return;
+    }
+
     try {
       let response;
       if (!existingBlog) {
@@ -216,14 +222,10 @@ const CreateBlog = () => {
 
               <div className={styles.formGroup}>
                 <label>Category <span className={styles.required}>*</span></label>
-                <select name="category" required className={styles.input}>
+                <select name="category" required className={styles.input} defaultValue={existingBlog?.category || ""}>
                   <option value="" disabled>Select a category</option>
                   {CATEGORIES.map((cat) => (
-                    <option
-                      key={cat}
-                      value={cat}
-                      selected={existingBlog?.category === cat}
-                    >
+                    <option key={cat} value={cat}>
                       {cat}
                     </option>
                   ))}
