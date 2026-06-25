@@ -2,7 +2,6 @@
   width: 100%;
   min-height: 92vh;
   background: linear-gradient(135deg, #060A6B 0%, #0d13a8 50%, #1a20c4 100%);
-  margin-top: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,52 +117,80 @@
 
 .hero-visual {
   flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
   z-index: 1;
 }
 
-.hero-card {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(8px);
+.hero-img-container {
+  position: relative;
+  width: 480px;
+}
+
+.hero-img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  display: block;
+}
+
+.hero-img-badge {
+  position: absolute;
+  bottom: -18px;
+  left: -20px;
+  background: white;
   border-radius: 14px;
-  padding: 18px 24px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+.hero-img-badge-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.hero-img-badge-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-img-badge-text strong {
+  color: #060A6B;
+  font-size: 15px;
+  font-weight: 700;
+  display: block;
+}
+
+.hero-img-badge-text span {
+  color: #888;
+  font-size: 12px;
+  display: block;
+}
+
+.hero-img-tag {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: white;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  animation: floatCard 6s ease-in-out infinite;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
 }
 
-.hero-card:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateX(-4px);
+.hero-img-tag-1 {
+  top: 16px;
+  right: -12px;
 }
 
-.hero-card-1 { animation-delay: 0s; }
-.hero-card-2 { animation-delay: 1.5s; }
-.hero-card-3 { animation-delay: 3s; }
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.hero-card-icon {
-  font-size: 22px;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 199, 0, 0.15);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.hero-img-tag-2 {
+  top: 56px;
+  right: -20px;
 }
 
 .hero-stats {
@@ -209,6 +236,15 @@
   height: 40px;
   background: rgba(255, 255, 255, 0.15);
   flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+  .hero-img-container {
+    width: 360px;
+  }
+  .hero-img {
+    height: 300px;
+  }
 }
 
 @media (max-width: 900px) {

@@ -7,22 +7,19 @@ const teamMembers = [
     name: "Damilola Adewale",
     role: "Founder & Editor-in-Chief",
     bio: "Passionate about sharing ideas that matter, with 8+ years in digital publishing.",
-    initial: "D",
-    color: "#060A6B",
+    avatar: "https://ui-avatars.com/api/?name=Damilola+Adewale&background=060A6B&color=fff&size=256&bold=true&font-size=0.35",
   },
   {
     name: "Sarah Johnson",
     role: "Technology Writer",
     bio: "Software engineer turned writer, covering the intersection of tech and human experience.",
-    initial: "S",
-    color: "#1a20c4",
+    avatar: "https://ui-avatars.com/api/?name=Sarah+Johnson&background=1a20c4&color=fff&size=256&bold=true&font-size=0.35",
   },
   {
     name: "Marcus Chen",
     role: "Lifestyle & Travel",
     bio: "World traveler and storyteller, documenting culture and adventure across 50+ countries.",
-    initial: "M",
-    color: "#FFC700",
+    avatar: "https://ui-avatars.com/api/?name=Marcus+Chen&background=D4A000&color=fff&size=256&bold=true&font-size=0.35",
   },
 ];
 
@@ -105,16 +102,11 @@ const AboutUs = () => {
             </p>
           </div>
           <div className={styles.missionVisual}>
-            <div className={styles.missionCard}>
-              <div className={styles.missionCardIcon}>📖</div>
-              <h3>Curated Content</h3>
-              <p>Every article is reviewed for quality and accuracy before publishing.</p>
-            </div>
-            <div className={styles.missionCard}>
-              <div className={styles.missionCardIcon}>✍️</div>
-              <h3>Expert Writers</h3>
-              <p>Our contributors bring real-world expertise to every piece they write.</p>
-            </div>
+            <img
+              src="https://picsum.photos/seed/harmedino-mission/480/380"
+              alt="Our mission"
+              className={styles.missionImg}
+            />
           </div>
         </div>
       </section>
@@ -146,12 +138,11 @@ const AboutUs = () => {
           <div className={styles.teamGrid}>
             {teamMembers.map((member) => (
               <div className={styles.teamCard} key={member.name}>
-                <div
+                <img
+                  src={member.avatar}
+                  alt={member.name}
                   className={styles.teamAvatar}
-                  style={{ background: member.color }}
-                >
-                  {member.initial}
-                </div>
+                />
                 <h3>{member.name}</h3>
                 <span className={styles.teamRole}>{member.role}</span>
                 <p>{member.bio}</p>

@@ -1,5 +1,5 @@
 .aboutPage {
-  margin-top: 70px;
+  margin-top: 0;
 }
 
 /* HERO */
@@ -181,37 +181,16 @@
 
 .missionVisual {
   flex-shrink: 0;
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  width: 420px;
 }
 
-.missionCard {
-  background: white;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 2px 16px rgba(6, 10, 107, 0.08);
-  border: 1px solid rgba(6, 10, 107, 0.06);
-}
-
-.missionCardIcon {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.missionCard h3 {
-  font-size: 17px;
-  font-weight: 600;
-  color: #060A6B;
-  margin-bottom: 8px;
-}
-
-.missionCard p {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-  margin: 0;
+.missionImg {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 16px 48px rgba(6, 10, 107, 0.2);
+  display: block;
 }
 
 /* VALUES */
@@ -286,16 +265,14 @@
 }
 
 .teamAvatar {
-  width: 72px;
-  height: 72px;
+  width: 84px;
+  height: 84px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  font-weight: 800;
-  color: white;
+  object-fit: cover;
   margin: 0 auto 16px;
+  display: block;
+  border: 3px solid #eef0f8;
+  box-shadow: 0 4px 18px rgba(6, 10, 107, 0.14);
 }
 
 .teamCard h3 {
@@ -405,9 +382,10 @@
   }
   .missionVisual {
     width: 100%;
-    flex-direction: row;
   }
-  .missionCard { flex: 1; }
+  .missionImg {
+    height: 260px;
+  }
 
   .valuesGrid {
     grid-template-columns: repeat(2, 1fr);
@@ -428,8 +406,8 @@
   .valuesGrid {
     grid-template-columns: 1fr;
   }
-  .missionVisual {
-    flex-direction: column;
+  .missionImg {
+    height: 220px;
   }
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);

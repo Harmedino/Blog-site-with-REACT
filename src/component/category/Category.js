@@ -10,6 +10,14 @@ const categoryIcons = {
   Lifestyle: "🌿",
 };
 
+const categoryImages = {
+  Technology: "https://picsum.photos/seed/category-tech/320/200",
+  Travel:     "https://picsum.photos/seed/category-travel/320/200",
+  Fashion:    "https://picsum.photos/seed/category-fashion/320/200",
+  Food:       "https://picsum.photos/seed/category-food/320/200",
+  Lifestyle:  "https://picsum.photos/seed/category-lifestyle/320/200",
+};
+
 const Category = ({ onClick, activeCate }) => {
   return (
     <div className={classes.categorySection}>
@@ -30,12 +38,20 @@ const Category = ({ onClick, activeCate }) => {
             <button
               key={index}
               className={`${classes.categoryItem} ${activeCate === category.name ? classes.active : ""}`}
-              onClick={(e) => onClick({ target: { innerText: category.name } })}
+              onClick={() => onClick({ target: { innerText: category.name } })}
             >
-              <span className={classes.categoryIcon}>
-                {categoryIcons[category.name] || "📌"}
-              </span>
-              <span className={classes.categoryName}>{category.name}</span>
+              <img
+                src={categoryImages[category.name] || `https://picsum.photos/seed/${category.name}/320/200`}
+                alt={category.name}
+                className={classes.categoryImg}
+              />
+              <div className={classes.categoryOverlay} />
+              <div className={classes.categoryInfo}>
+                <span className={classes.categoryIcon}>
+                  {categoryIcons[category.name] || "📌"}
+                </span>
+                <span className={classes.categoryName}>{category.name}</span>
+              </div>
             </button>
           ))}
         </div>

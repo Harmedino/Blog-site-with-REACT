@@ -19,17 +19,21 @@ const HeaderBlog = () => {
           </div>
         </div>
         <div className="hero-visual">
-          <div className="hero-card hero-card-1">
-            <div className="hero-card-icon">✍️</div>
-            <span>Share your story</span>
-          </div>
-          <div className="hero-card hero-card-2">
-            <div className="hero-card-icon">🌍</div>
-            <span>Reach readers globally</span>
-          </div>
-          <div className="hero-card hero-card-3">
-            <div className="hero-card-icon">💡</div>
-            <span>Spark new ideas</span>
+          <div className="hero-img-container">
+            <img
+              src="https://picsum.photos/seed/harmedino-hero/560/420"
+              alt="Writers and readers"
+              className="hero-img"
+            />
+            <div className="hero-img-badge">
+              <span className="hero-img-badge-icon">✍️</span>
+              <div className="hero-img-badge-text">
+                <strong>500+ Stories</strong>
+                <span>published this year</span>
+              </div>
+            </div>
+            <div className="hero-img-tag hero-img-tag-1">📖 Technology</div>
+            <div className="hero-img-tag hero-img-tag-2">✈️ Travel</div>
           </div>
         </div>
       </div>
