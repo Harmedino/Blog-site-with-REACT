@@ -26,17 +26,21 @@
 
 @media (max-width: 768px) {
   .aside {
-    position: static;
+    position: sticky;
+    top: 64px;
     width: 100%;
     height: auto;
+    z-index: 90;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   }
 
   .content {
     margin-left: 0;
-    padding: 20px 16px;
+    padding: 20px 16px 40px;
   }
 
   .profilePage {
     flex-direction: column;
+    margin-top: 64px;
   }
 }

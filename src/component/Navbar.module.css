@@ -233,6 +233,11 @@
   backdrop-filter: blur(2px);
 }
 
+/* ── Mobile actions hidden on desktop ── */
+.mobileActions {
+  display: none;
+}
+
 /* ── Mobile ── */
 @media (max-width: 860px) {
   .hamburgerMenu {

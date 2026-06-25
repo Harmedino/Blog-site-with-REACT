@@ -6,6 +6,15 @@ import Category from "./category/Category";
 import classes from "./Display.module.css";
 import Review from "./Review";
 
+const topics = [
+  { icon: "💻", label: "Technology", count: "120+ articles" },
+  { icon: "✈️", label: "Travel", count: "80+ articles" },
+  { icon: "🍽️", label: "Food", count: "65+ articles" },
+  { icon: "💪", label: "Health", count: "90+ articles" },
+  { icon: "🎨", label: "Design", count: "55+ articles" },
+  { icon: "📈", label: "Business", count: "75+ articles" },
+];
+
 const DisplayBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [fail, setFail] = useState("");
@@ -96,6 +105,71 @@ const DisplayBlogs = () => {
           ))}
         </main>
       </div>
+
+      {/* Topics Section */}
+      <section className={classes.topicsSection}>
+        <div className={classes.topicsInner}>
+          <div className={classes.topicsHeader}>
+            <span className={classes.topicsBadge}>Explore by Topic</span>
+            <h2>Find Your Next Read</h2>
+            <p>Browse our curated categories and discover stories that match your interests.</p>
+          </div>
+          <div className={classes.topicsGrid}>
+            {topics.map((t) => (
+              <div className={classes.topicCard} key={t.label}>
+                <span className={classes.topicIcon}>{t.icon}</span>
+                <strong className={classes.topicLabel}>{t.label}</strong>
+                <span className={classes.topicCount}>{t.count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Write CTA Section */}
+      <section className={classes.ctaSection}>
+        <div className={classes.ctaInner}>
+          <div className={classes.ctaText}>
+            <span className={classes.ctaBadge}>Share Your Story</span>
+            <h2>Have something to say?</h2>
+            <p>Join hundreds of writers on Harmedino and share your knowledge, experiences, and passions with readers around the world.</p>
+            <div className={classes.ctaActions}>
+              <Link to="/" className={classes.ctaBtnPrimary}>Start Writing Today</Link>
+              <Link to="/blogs" className={classes.ctaBtnSecondary}>Read First</Link>
+            </div>
+          </div>
+          <div className={classes.ctaVisual}>
+            <img
+              src="https://picsum.photos/seed/harmedino-write/500/360"
+              alt="Write your story"
+              className={classes.ctaImage}
+            />
+            <div className={classes.ctaImageOverlay}>
+              <span className={classes.ctaOverlayIcon}>✍️</span>
+              <span>Your story matters</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className={classes.newsletterSection}>
+        <div className={classes.newsletterInner}>
+          <span className={classes.newsletterBadge}>Stay Updated</span>
+          <h2>Never miss a great story</h2>
+          <p>Get the best articles delivered straight to your inbox every week. No spam, just great reading.</p>
+          <form className={classes.newsletterForm} onSubmit={(e) => e.preventDefault()}>
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              className={classes.newsletterInput}
+            />
+            <button type="submit" className={classes.newsletterBtn}>Subscribe Free</button>
+          </form>
+          <span className={classes.newsletterNote}>Join 10,000+ readers. Unsubscribe any time.</span>
+        </div>
+      </section>
+
       <Review />
     </>
   );
