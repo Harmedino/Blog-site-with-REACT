@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootPage from "./Pages/RootPage";
 import NotFound from "./Pages/NotFound";
+import BlogListPage from "./Pages/BlogListPage";
 import CreateBlog from "./component/CreateBlog";
 import DisplayBlogs from "./component/DisplayBlogs";
 import Fullblog from "./component/Fullblog";
@@ -22,13 +23,9 @@ const router = createBrowserRouter([
     id: "root",
     loader: tokenLoader,
     children: [
-      {
-        path: "/blogList",
-        children: [
-          { index: true, element: <DisplayBlogs /> },
-          { path: "more/:id", element: <Fullblog />, loader: checkAuthLoader },
-        ],
-      },
+      { path: "/blogList", element: <DisplayBlogs /> },
+      { path: "/blogs", element: <BlogListPage /> },
+      { path: "/more/:id", element: <Fullblog />, loader: checkAuthLoader },
       { path: "/:id?", element: <CreateBlog />, loader: checkAuthLoader },
       { path: "/Auth", element: <AuthForm /> },
       { path: "/contact", element: <Contact /> },
@@ -45,7 +42,6 @@ const router = createBrowserRouter([
         ],
       },
       { path: "logout", action: LogoutAction },
-      { path: "/more/:id", element: <Fullblog />, loader: checkAuthLoader },
       { path: "*", element: <NotFound /> },
     ],
   },

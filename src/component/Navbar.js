@@ -42,6 +42,15 @@ const Navbar = () => {
                 Home
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/blogs"
+                className={({ isActive }) => isActive ? classes.active : undefined}
+                onClick={closeMenu}
+              >
+                Blog
+              </NavLink>
+            </li>
             {token && (
               <>
                 <li>

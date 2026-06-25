@@ -15,7 +15,7 @@ const HeaderBlog = () => {
           </p>
           <div className="hero-actions">
             <Link to="/blogList" className="hero-btn-primary">Browse Posts</Link>
-            <Link to="/Auth?mode=signup" className="hero-btn-secondary">Start Writing</Link>
+            <Link to="/" className="hero-btn-secondary">Start Writing</Link>
           </div>
         </div>
         <div className="hero-visual">

@@ -36,9 +36,10 @@ const Footer = () => {
             <h4>Explore</h4>
             <ul>
               <li><NavLink to="/blogList">Home</NavLink></li>
+              <li><NavLink to="/blogs">All Articles</NavLink></li>
               <li><NavLink to="/about-us">About Us</NavLink></li>
               <li><NavLink to="/contact">Contact</NavLink></li>
-              <li><NavLink to="/Auth?mode=signup">Start Writing</NavLink></li>
+              <li><NavLink to="/">Start Writing</NavLink></li>
             </ul>
           </div>
 
