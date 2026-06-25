@@ -1,122 +1,90 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Link,useRouteLoaderData } from "react-router-dom";
-import { publicRequest,BaseUrl } from "../../request";
+import React, { useEffect, useState } from "react";
+import { Link, useRouteLoaderData } from "react-router-dom";
+import { publicRequest } from "../../request";
+import styles from "./ProfileBlogList.module.css";
 
 const Published = () => {
-  const [blogs, setBlogs] = useState();
-  const [fail, setFail] = useState();
+  const [blogs, setBlogs] = useState([]);
+  const [fail, setFail] = useState("");
   const [pending, setPending] = useState(true);
-  const [id, setId] = useState();
-  const token= useRouteLoaderData("root");
+  const [id, setId] = useState(null);
+  const token = useRouteLoaderData("root");
   const publicReq = publicRequest();
 
-  useEffect(() => {
-    verifyToken()
-  }, []);
-
-  useEffect(() => {
-    if (id !== undefined) {
-      fetching(); 
-    }
-  }, [id]);
+  useEffect(() => { verifyToken(); }, []);
+  useEffect(() => { if (id) fetching(); }, [id]);
 
   const verifyToken = async () => {
     try {
-      const response = await publicReq.post(
+      const res = await publicReq.post(
         "/verifyToken",
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
       );
-      setId(response.data.message._id);
-      
-    } catch (error) {
-      console.error("Token verification error:", error.message);
-    } 
-    
+      setId(res.data.message._id);
+    } catch (err) {
+      console.error("Token error:", err.message);
+    }
   };
 
-  async function fetching() {
+  const fetching = async () => {
     try {
-     
-        const { data } = await publicReq.get(`/getUserBlog/${id}`);
+      const { data } = await publicReq.get(`/getUserBlog/${id}`);
       setBlogs(data);
-      
-    } catch (error) {
-      setFail(error.message);
+    } catch (err) {
+      setFail(err.message);
     } finally {
       setPending(false);
     }
-  }
-  const formatPublicationDate = (date) => {
-    const currentDate = new Date();
-    const publicationDate = new Date(date);
-
-    const timeDifferenceInSeconds = (currentDate - publicationDate) / 1000;
-
-    if (timeDifferenceInSeconds < 60) {
-      return "today";
-    } else if (timeDifferenceInSeconds < 3600) {
-      const minutes = Math.floor(timeDifferenceInSeconds / 60);
-      return "today";
-    } else if (timeDifferenceInSeconds < 2592000) {
-      const days = Math.floor(timeDifferenceInSeconds / 86400);
-      return `${days} ${days === 1 ? "today" : "days"} ago`;
-    } else {
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      const month = monthNames[publicationDate.getMonth()];
-      return `last ${month}`;
-    }
   };
 
-
   return (
-    <div className="blog-details">
-     
-      <main className="blog-list">
-        {pending && <div>Loading...</div>}
-        {fail && <div>{fail}</div>}
-        {blogs && blogs.length === 0 && <div>No published blogs</div>}
-        {blogs &&
-          blogs.map((blog, index) => (
-            <div className="blog-card" key={blog._id}>
-              <div className="blog-image">
-                <img
-                  src={`${BaseUrl}uploads/${blog.image.data}`}
-                  alt="Blog Post"
-                />
+    <div className={styles.listPage}>
+      <div className={styles.listHeader}>
+        <h2>All My Posts</h2>
+        <p>All blog posts you have submitted, with their current status.</p>
+      </div>
+      <div className={styles.grid}>
+        {pending && (
+          <div className={styles.loadingState}>
+            <div className={styles.spinner}></div> Loading your posts...
+          </div>
+        )}
+        {fail && (
+          <div className={styles.emptyState}>
+            <h3>Error loading posts</h3><p>{fail}</p>
+          </div>
+        )}
+        {!pending && !fail && blogs.length === 0 && (
+          <div className={styles.emptyState}>
+            <h3>No posts yet</h3>
+            <p>You haven't published any blog posts yet.</p>
+          </div>
+        )}
+        {blogs.map((blog) => (
+          <div className={styles.card} key={blog._id}>
+            <div className={styles.cardImage}>
+              <img src={blog.image} alt={blog.title} />
+            </div>
+            <div className={styles.cardBody}>
+              <div className={styles.cardTop}>
+                <span className={styles.categoryBadge}>{blog.category}</span>
+                <span className={`${styles.statusBadge} ${blog.publication ? styles.statusApproved : styles.statusPending}`}>
+                  {blog.publication ? "Approved" : "Pending"}
+                </span>
               </div>
-              <div className="blog-content">
-                <h2>{blog.title}</h2>
-                <p>{blog.body.slice(0, 200)}...</p>
-                <p>{formatPublicationDate(blog.date)}</p>
-                <p>Publication Status: {blog.publication ? 'Approved' : 'Pending'}</p>
-                <Link to={`/more/${blog._id}?${blog.title}`}>Read more ...</Link>
+              <p className={styles.cardTitle}>{blog.title}</p>
+              <p className={styles.cardExcerpt}>{blog.excerpt || blog.body.slice(0, 120)}...</p>
+              <div className={styles.cardFooter}>
+                <span className={styles.cardDate}>📅 {blog.date}</span>
+                <Link to={`/more/${blog._id}`} className={styles.readLink}>Read →</Link>
               </div>
             </div>
-          ))}
-      </main>
+          </div>
+        ))}
+      </div>
     </div>
   );
-  
 };
 
 export default Published;

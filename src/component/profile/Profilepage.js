@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import styles from "./Profilepage.module.css";
-
 import { getAuthToken } from "../../lib/token";
 import Message from "../../UI/Message";
 import { publicRequest } from "../../request";
@@ -9,11 +7,11 @@ import { publicRequest } from "../../request";
 const Profilepage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [data, setData] = useState({});
+  const [id, setId] = useState("");
+  const [message, setMessage] = useState("");
+  const [saving, setSaving] = useState(false);
   const inputValue = useRef();
-  const [message, setMessage] = useState();
-  
   const publicReq = publicRequest();
-  const [id, setId] = useState();
   const token = getAuthToken();
 
   useEffect(() => {
@@ -25,14 +23,8 @@ const Profilepage = () => {
       const response = await publicReq.post(
         "/verifyToken",
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
       );
-      console.log(response.data.message);
       setId(response.data.message._id);
       setData(response.data.message);
     } catch (error) {
@@ -41,6 +33,11 @@ const Profilepage = () => {
   };
 
   const handleEditToggle = async () => {
+    if (!isEditing) {
+      setIsEditing(true);
+      return;
+    }
+
     const formData = new FormData(inputValue.current);
     const newData = {
       firstname: formData.get("firstnameValue"),
@@ -50,102 +47,104 @@ const Profilepage = () => {
       email: formData.get("userEmailValue"),
     };
 
-    setIsEditing(!isEditing);
-    if (isEditing) {
-      try {
-        console.log(newData);
-        const response = await axios.patch(
-          "http://localhost:5000/updateUser/" + id,
-          JSON.stringify(newData),
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(response);
-        setMessage(response.data.message);
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      } catch (error) {
-        console.log(error);
-        setMessage(error.response.data.message);
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      }
+    setSaving(true);
+    try {
+      const response = await publicReq.patch(
+        `/updateUser/${id}`,
+        JSON.stringify(newData),
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
+      );
+      setMessage(response.data.message);
+      setData({ ...data, ...newData });
+      setIsEditing(false);
+    } catch (error) {
+      setMessage(error.response?.data?.message || error.message);
+    } finally {
+      setSaving(false);
+      setTimeout(() => setMessage(""), 3000);
     }
   };
+
+  const initials = `${data.firstname?.[0] || ""}${data.lastname?.[0] || ""}`.toUpperCase() || "U";
+
   return (
     <>
-      {message && <Message message={message}></Message>}
-      <div className={styles.profileForm}>
-      
-        <div className={styles.profileInfo}>
-          <h3>Profile Information</h3>
-          <hr />
-          <form className={styles.profileData} ref={inputValue}>
+      {message && <Message message={message} />}
+      <div className={styles.profilePage}>
+
+        <div className={styles.profileHeader}>
+          <div className={styles.avatarLarge}>{initials}</div>
+          <div className={styles.headerInfo}>
+            <h2>{data.firstname ? `${data.firstname} ${data.lastname}` : "Loading..."}</h2>
+            <span className={styles.username}>@{data.username || "—"}</span>
+            <span className={styles.emailBadge}>{data.email || ""}</span>
+          </div>
+        </div>
+
+        <div className={styles.formCard}>
+          <div className={styles.formCardHeader}>
+            <h3>Profile Information</h3>
+            <button
+              type="button"
+              className={`${styles.editBtn} ${isEditing ? styles.editBtnSave : ""}`}
+              onClick={handleEditToggle}
+              disabled={saving}
+            >
+              {saving ? "Saving..." : isEditing ? "Save Changes" : "Edit Profile"}
+            </button>
+          </div>
+
+          <form ref={inputValue} className={styles.formGrid}>
             <div className={styles.formGroup}>
-              <label htmlFor="firstnameValue">First Name:</label>
+              <label>First Name</label>
               <input
                 type="text"
-                className="form-control"
                 name="firstnameValue"
-                defaultValue={data ? data.firstname : "Nill"}
+                defaultValue={data.firstname || ""}
                 disabled={!isEditing}
-                required
+                placeholder="First name"
               />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor="name">Last Name:</label>
+              <label>Last Name</label>
               <input
                 type="text"
                 name="lastnameValue"
-                defaultValue={data.lastname}
+                defaultValue={data.lastname || ""}
                 disabled={!isEditing}
-                required
+                placeholder="Last name"
               />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor="name">phone Number:</label>
-              <input
-                type="text"
-                name="phoneValue"
-                defaultValue={data ? data.phone : "Nill"}
-                disabled={!isEditing}
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="username">username:</label>
+              <label>Username</label>
               <input
                 type="text"
                 name="usernameValue"
-                defaultValue={data ? data.username : ""}
+                defaultValue={data.username || ""}
                 disabled={!isEditing}
-                required
+                placeholder="Username"
               />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor="email">Email:</label>
+              <label>Phone Number</label>
+              <input
+                type="text"
+                name="phoneValue"
+                defaultValue={data.phone || ""}
+                disabled={!isEditing}
+                placeholder="e.g. +234 800 000 0000"
+              />
+            </div>
+            <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+              <label>Email Address</label>
               <input
                 type="email"
                 name="userEmailValue"
-                defaultValue={data.email}
+                defaultValue={data.email || ""}
                 disabled={!isEditing}
-                required
+                placeholder="your@email.com"
               />
             </div>
-
-            <button
-              type="button"
-              className={`btn btn-primary ${styles.editButton}`}
-              onClick={handleEditToggle}
-            >
-              {isEditing ? "Save Changes" : "Edit Profile"}
-            </button>
           </form>
         </div>
       </div>

@@ -1,95 +1,88 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Link,useRouteLoaderData } from "react-router-dom";
-import { publicRequest,BaseUrl } from "../../request";
-
+import React, { useEffect, useState } from "react";
+import { Link, useRouteLoaderData } from "react-router-dom";
+import { publicRequest } from "../../request";
+import styles from "./ProfileBlogList.module.css";
 
 const Approved = () => {
-  const [blogs, setBlogs] = useState();
-  const [fail, setFail] = useState();
+  const [blogs, setBlogs] = useState([]);
+  const [fail, setFail] = useState("");
   const [pending, setPending] = useState(true);
-  const [id, setId] = useState();
-  const token= useRouteLoaderData("root");
+  const [id, setId] = useState(null);
+  const token = useRouteLoaderData("root");
   const publicReq = publicRequest();
 
-  useEffect(() => {
-    verifyToken()
-  }, []);
-
-  useEffect(() => {
-    if (id !== undefined) {
-      fetching(); 
-    }
-  }, [id]);
+  useEffect(() => { verifyToken(); }, []);
+  useEffect(() => { if (id) fetching(); }, [id]);
 
   const verifyToken = async () => {
     try {
-      const response = await publicReq.post(
+      const res = await publicReq.post(
         "/verifyToken",
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
       );
-      setId(response.data.message._id);
-      
-    } catch (error) {
-      console.error("Token verification error:", error.message);
-    } 
-    
+      setId(res.data.message._id);
+    } catch (err) {
+      console.error("Token error:", err.message);
+    }
   };
 
-  async function fetching() {
+  const fetching = async () => {
     try {
-     
-        const { data } = await publicReq.get(`/getUserBlog/${id}`);
-      setBlogs(data);
-      
-    } catch (error) {
-      setFail(error.message);
+      const { data } = await publicReq.get(`/getUserBlog/${id}`);
+      setBlogs(data.filter((b) => b.publication));
+    } catch (err) {
+      setFail(err.message);
     } finally {
       setPending(false);
     }
-  }
-
-
+  };
 
   return (
-    <div className="blog-details">
-      <h3 className="ourBlog">Our Blog</h3> <hr />
-      <main className="blog-list">
-        {pending && <h1>Loading...</h1>}
-        {fail && <div>{fail}</div>}
-        {blogs &&
-          blogs
-            .filter((blog) => blog.publication) // Filter only approved blogs
-          .map((blog, index) => (
-              
-              <div className="blog-card" key={blog._id}>
-                <div className="blog-image">
-
-                  <img
-                    src={`${BaseUrl}uploads/${blog.image.data}`}
-                    alt="Blog Post"
-                  />
-                </div>
-                <div className="blog-content">
-                  <h2>{blog.title}</h2>
-                  <p>{blog.body.slice(0, 200)}...</p>
-                  
-                  <p>Publication Status: Approved</p>
-                  <Link to={`/more/${blog._id}?${blog.title}`}>Read more ...</Link>
-                </div>
+    <div className={styles.listPage}>
+      <div className={styles.listHeader}>
+        <h2>Approved Posts</h2>
+        <p>Posts that have been reviewed and approved for public viewing.</p>
+      </div>
+      <div className={styles.grid}>
+        {pending && (
+          <div className={styles.loadingState}>
+            <div className={styles.spinner}></div> Loading approved posts...
+          </div>
+        )}
+        {fail && (
+          <div className={styles.emptyState}>
+            <h3>Error loading posts</h3><p>{fail}</p>
+          </div>
+        )}
+        {!pending && !fail && blogs.length === 0 && (
+          <div className={styles.emptyState}>
+            <h3>No approved posts yet</h3>
+            <p>None of your posts have been approved yet. Keep writing!</p>
+          </div>
+        )}
+        {blogs.map((blog) => (
+          <div className={styles.card} key={blog._id}>
+            <div className={styles.cardImage}>
+              <img src={blog.image} alt={blog.title} />
+            </div>
+            <div className={styles.cardBody}>
+              <div className={styles.cardTop}>
+                <span className={styles.categoryBadge}>{blog.category}</span>
+                <span className={`${styles.statusBadge} ${styles.statusApproved}`}>Approved</span>
               </div>
-            ))}
-        {!pending && blogs && blogs.length === 0 && <div>No approved blogs</div>}
-      </main>
+              <p className={styles.cardTitle}>{blog.title}</p>
+              <p className={styles.cardExcerpt}>{blog.excerpt || blog.body.slice(0, 120)}...</p>
+              <div className={styles.cardFooter}>
+                <span className={styles.cardDate}>📅 {blog.date}</span>
+                <Link to={`/more/${blog._id}`} className={styles.readLink}>Read →</Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
-  
 };
 
 export default Approved;
