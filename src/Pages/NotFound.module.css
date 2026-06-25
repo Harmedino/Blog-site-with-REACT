@@ -1,0 +1,93 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #060A6B 0%, #1a20c4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.content {
+  max-width: 520px;
+}
+
+.code {
+  font-size: 120px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.08);
+  line-height: 1;
+  letter-spacing: -5px;
+  margin-bottom: -20px;
+  position: relative;
+}
+
+.code::after {
+  content: "404";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFC700;
+  font-size: 80px;
+  letter-spacing: -3px;
+}
+
+.content h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: white !important;
+  margin: 20px 0 16px;
+}
+
+.content p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  display: inline-block;
+  background: #FFC700;
+  color: #060A6B;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(255, 199, 0, 0.35);
+}
+
+.btnPrimary:hover {
+  background: #e6b300;
+  transform: translateY(-2px);
+}
+
+.btnSecondary {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 13px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btnSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}

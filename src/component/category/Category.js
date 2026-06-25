@@ -1,40 +1,47 @@
-import React from 'react'
-import classes from './Category.module.css'
-import { categoes } from './Catogries'
+import React from "react";
+import classes from "./Category.module.css";
+import { categoes } from "./Catogries";
 
-const categories = categoes
+const categoryIcons = {
+  Technology: "💻",
+  Travel: "✈️",
+  Fashion: "👗",
+  Food: "🍔",
+  Lifestyle: "🌿",
+};
 
-const Category = (props) => {
-    
-
-
-   
-    return (
-        <div className={classes.category}>
-            <div className={classes.container}>
-      <h1 className={classes.head}>Popular Categories</h1>
-      
-      <div className={classes.categoryList} onClick={props.onClick}>
-          {categories.map((category, index) => (
-            <div key={index} className={classes.categoryItem}  style={{ backgroundColor: category.color }}>
-              <img
-                src={category.imageSrc}
-                alt=''
-                className={classes.categoryImage}
-              />
-              <div
-               
-                className={classes.categoryContent}
-              >
-                {category.name}
-              </div>
-            </div>
+const Category = ({ onClick, activeCate }) => {
+  return (
+    <div className={classes.categorySection}>
+      <div className={classes.container}>
+        <div className={classes.header}>
+          <h2 className={classes.title}>Browse by Category</h2>
+          {activeCate && (
+            <button
+              className={classes.clearBtn}
+              onClick={() => onClick({ target: { innerText: activeCate } })}
+            >
+              Clear filter ×
+            </button>
+          )}
+        </div>
+        <div className={classes.categoryList}>
+          {categoes.map((category, index) => (
+            <button
+              key={index}
+              className={`${classes.categoryItem} ${activeCate === category.name ? classes.active : ""}`}
+              onClick={(e) => onClick({ target: { innerText: category.name } })}
+            >
+              <span className={classes.categoryIcon}>
+                {categoryIcons[category.name] || "📌"}
+              </span>
+              <span className={classes.categoryName}>{category.name}</span>
+            </button>
           ))}
         </div>
-              
       </div>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Category
+export default Category;

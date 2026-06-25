@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootPage from "./Pages/RootPage";
+import NotFound from "./Pages/NotFound";
 import CreateBlog from "./component/CreateBlog";
 import DisplayBlogs from "./component/DisplayBlogs";
 import Fullblog from "./component/Fullblog";
@@ -29,26 +30,27 @@ const router = createBrowserRouter([
         ],
       },
       { path: "/:id?", element: <CreateBlog />, loader: checkAuthLoader },
-
       { path: "/Auth", element: <AuthForm /> },
       { path: "/contact", element: <Contact /> },
       { path: "/about-us", element: <AboutUs /> },
-      // {
-      //   path: "/profile",
-      //   element: <Profile />,
-      //   loader: checkAuthLoader,
-      //   children: [
-      //     { index: true, element: <Profilepage /> },
-      //     { path: "published", element: <Published /> },
-      //     { path: "approved", element: <Approved /> },
-      //     { path: "disapproved", element: <Disapproved /> },
-      //   ],
-      // },
+      {
+        path: "/profile",
+        element: <Profile />,
+        loader: checkAuthLoader,
+        children: [
+          { index: true, element: <Profilepage /> },
+          { path: "published", element: <Published /> },
+          { path: "approved", element: <Approved /> },
+          { path: "disapproved", element: <Disapproved /> },
+        ],
+      },
       { path: "logout", action: LogoutAction },
       { path: "/more/:id", element: <Fullblog />, loader: checkAuthLoader },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
+
 function App() {
   return <RouterProvider router={router} />;
 }

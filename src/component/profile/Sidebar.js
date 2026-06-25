@@ -1,60 +1,36 @@
-import React, { useState } from "react";
-import styles from "./Sidebar.module.css"; // Import your CSS module
+import React from "react";
+import styles from "./Sidebar.module.css";
 import { NavLink } from "react-router-dom";
-import profile from '../../image/Ellipse 2.png'
+
+const navItems = [
+  { to: "/profile", label: "My Profile", icon: "👤", end: true },
+  { to: "published", label: "Published", icon: "📝" },
+  { to: "approved", label: "Approved", icon: "✅" },
+  { to: "disapproved", label: "Disapproved", icon: "❌" },
+];
 
 const Sidebar = () => {
-  const [selectedOption, setSelectedOption] = useState("profile");
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-  };
-
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.eclipse}></div>
-      <ul>
-        
-        <li>
+      <div className={styles.sidebarHeader}>
+        <div className={styles.avatarCircle}>U</div>
+        <span className={styles.sidebarTitle}>My Account</span>
+      </div>
+      <nav className={styles.sidebarNav}>
+        {navItems.map((item) => (
           <NavLink
-            to="/profile"
-            className={({ isActive }) => (isActive ? styles.active : undefined)}
-            end
+            key={item.to}
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) =>
+              `${styles.navItem} ${isActive ? styles.active : ""}`
+            }
           >
-             <img
-            src={profile}
-            className={styles.profilePicture}
-            alt="Profile"
-          />
+            <span className={styles.navIcon}>{item.icon}</span>
+            <span>{item.label}</span>
           </NavLink>
-        </li>
-        <li>
-          {" "}
-          <NavLink
-            to={"published"}
-            className={({ isActive }) => (isActive ? styles.active : undefined)}
-          >
-            Published Blogs
-          </NavLink>
-        </li>
-        <li>
-          {" "}
-          <NavLink
-            to={"approved"}
-            className={({ isActive }) => (isActive ? styles.active : undefined)}
-          >
-            Approved Blogs
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={"disapproved"}
-            className={({ isActive }) => (isActive ? styles.active : undefined)}
-          >
-            Disapproved Blogs
-          </NavLink>
-        </li>
-      </ul>
+        ))}
+      </nav>
     </aside>
   );
 };

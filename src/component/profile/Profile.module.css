@@ -1,36 +1,42 @@
 .profilePage {
   display: flex;
   margin-top: 70px;
-  height: 110vh;
-  /* overflow-x: hidden !important; */
+  min-height: calc(100vh - 70px);
+  background: #F4F6FF;
 }
-.aside {
-  width: 18%;
-  height: 100%;
-  position: fixed;
-  /* z-index: 3; */
 
+.aside {
+  width: 260px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  height: calc(100vh - 70px);
+  background: #060A6B;
+  z-index: 100;
+  overflow-y: auto;
 }
+
 .content {
-  min-height: 100vh !important;
-  padding: 10px;
-  width: 82%;
-  margin-left: 240px;
-  background: linear-gradient(113.5deg, #000588 12.16%, rgba(6, 10, 107, 0) 90.37%);
-  /* overflow-x: hidden !important; */
+  flex: 1;
+  margin-left: 260px;
+  padding: 36px;
+  min-height: calc(100vh - 70px);
 }
 
 @media (max-width: 768px) {
+  .aside {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 20px 16px;
+  }
+
   .profilePage {
     flex-direction: column;
-    width: 100%;
-  }
-  .aside {
-    width: 100% !important;
-  }
-  .content {
-    width: 100% !important;
-    margin-left: 0;
-    margin-top: 10vh;
   }
 }

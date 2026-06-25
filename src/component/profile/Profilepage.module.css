@@ -1,90 +1,85 @@
-/* ProfileForm.module.css */
 .profileForm {
-  color: white;
-  width: 100%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-self: start;
-  position: absolute;
-  
-}
-
-.profileHeader {
-  display: flex;
-  align-items: start;
-  flex-direction: column;
-  width: 30% !important;
-}
-.profileInfo {
-  width: 70%;
-  margin: auto;
-  flex-direction: column;
-}
-
-
-
-.profileInfoList {
-  list-style-type: none;
-  margin-left: 20px;
-  padding: 0;
-}
-
-.profileInfoList li {
-  margin-bottom: 10px;
+  max-width: 640px;
 }
 
 .profileInfo {
-  margin-top: 20px;
+  background: white;
+  border-radius: 18px;
+  padding: 36px;
+  box-shadow: 0 2px 16px rgba(6, 10, 107, 0.07);
 }
 
-.editButton {
-  margin-top: 20px;
+.profileInfo h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #060A6B;
+  margin-bottom: 4px;
 }
+
+.profileInfo hr {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 16px 0 24px;
+}
+
 .profileData {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 16px;
 }
 
 .formGroup {
-  margin-bottom: 20px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .formGroup label {
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
 }
 
-.formGroup input,
-.formGroup textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-weight: 500;
+.formGroup input {
+  padding: 11px 14px;
+  border: 1.5px solid #e0e4f0;
+  border-radius: 10px;
   font-size: 14px;
-  color: black;
-  outline: #FFC700 !important;
-  border: #FFC700;
+  font-family: inherit;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: #fafbff;
 }
 
-.formGroup textarea {
-  resize: vertical;
+.formGroup input:focus {
+  border-color: #060A6B;
+  background: white;
+}
+
+.formGroup input:disabled {
+  background: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
 }
 
 .editButton {
-  margin-top: 20px;
-  background-color: #6265AE;
+  align-self: flex-start;
+  margin-top: 8px;
+  background: #060A6B;
   color: white;
-  outline: #FFC700;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 11px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.25s ease;
 }
 
 .editButton:hover {
-  background-color: #31359e;
+  background: #FFC700;
+  color: #060A6B;
+  transform: translateY(-1px);
 }

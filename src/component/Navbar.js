@@ -2,66 +2,73 @@ import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import { useState } from "react";
 
-const Navbar = ({ message }) => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const token = useRouteLoaderData("root");
-  // console.log(token)
 
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const handleMenuToggle = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <nav className={classes.navbar}>
       <div className={classes.navContainer}>
-        <h2>Harmedino</h2>
-        <div className={classes.hamburgerMenu} onClick={handleMenuToggle}>
-          <i className={`fas fa-bars`}></i>
-        </div>
+        <NavLink to="/blogList" className={classes.logo} onClick={closeMenu}>
+          <span className={classes.logoIcon}>H</span>
+          <span className={classes.logoText}>Harmedino</span>
+        </NavLink>
+
+        <button
+          className={`${classes.hamburgerMenu} ${menuOpen ? classes.menuOpen : ""}`}
+          onClick={handleMenuToggle}
+          aria-label="Toggle menu"
+        >
+          <span className={classes.bar}></span>
+          <span className={classes.bar}></span>
+          <span className={classes.bar}></span>
+        </button>
+
+        {menuOpen && (
+          <div className={classes.overlay} onClick={closeMenu}></div>
+        )}
+
         <div className={`${classes.links} ${menuOpen ? classes.showBar : ""}`}>
-          <ul className={classes.list} onClick={handleMenuToggle}>
+          <ul className={classes.list}>
             <li>
               <NavLink
                 to="/blogList"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
+                className={({ isActive }) => isActive ? classes.active : undefined}
+                onClick={closeMenu}
               >
                 Home
               </NavLink>
             </li>
-            {token ? (
+            {token && (
               <>
                 <li>
                   <NavLink
                     to="/"
-                    className={({ isActive }) =>
-                      isActive ? classes.active : undefined
-                    }
+                    className={({ isActive }) => isActive ? classes.active : undefined}
+                    onClick={closeMenu}
                   >
                     Write
                   </NavLink>
                 </li>
-                {/* <li>
+                <li>
                   <NavLink
                     to="/profile"
-                    className={({ isActive }) =>
-                      isActive ? classes.active : undefined
-                    }
+                    className={({ isActive }) => isActive ? classes.active : undefined}
+                    onClick={closeMenu}
                   >
                     Profile
                   </NavLink>
-                </li> */}
+                </li>
               </>
-            ) : (
-              " "
             )}
             <li>
               <NavLink
                 to="/about-us"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
+                className={({ isActive }) => isActive ? classes.active : undefined}
+                onClick={closeMenu}
               >
                 About
               </NavLink>
@@ -69,29 +76,24 @@ const Navbar = ({ message }) => {
             <li>
               <NavLink
                 to="/contact"
-                className={({ isActive }) =>
-                  isActive ? classes.active : undefined
-                }
+                className={({ isActive }) => isActive ? classes.active : undefined}
+                onClick={closeMenu}
               >
                 Contact
               </NavLink>
             </li>
-            {!token && (
+            {!token ? (
               <li>
-                <NavLink
-                  to="/Auth?mode=login"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                >
-                  Auth
+                <NavLink to="/Auth?mode=login" className={classes.authBtn} onClick={closeMenu}>
+                  Login
                 </NavLink>
               </li>
-            )}
-            {token && (
-              <li >
+            ) : (
+              <li>
                 <Form action="/logout" method="post">
-                  <button className={classes.logout}> Logout</button>
+                  <button className={classes.logoutBtn} onClick={closeMenu}>
+                    Logout
+                  </button>
                 </Form>
               </li>
             )}
@@ -101,4 +103,5 @@ const Navbar = ({ message }) => {
     </nav>
   );
 };
+
 export default Navbar;
