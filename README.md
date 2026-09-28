@@ -1,70 +1,104 @@
-# Getting Started with Create React App
+# Harmedino — community blog
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, full-featured blogging platform: anyone can sign up, write posts in Markdown, and publish them for readers everywhere.
 
-## Available Scripts
+**Live:** https://blog-site-beryl.vercel.app · **API:** [Harmedino/Blog-backend-NODE](https://github.com/Harmedino/Blog-backend-NODE)
 
-In the project directory, you can run:
+![CI](https://github.com/Harmedino/Blog-site-with-REACT/actions/workflows/ci.yml/badge.svg)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Readers**
+- Search by title, author, tag or content, filter by topic and sort — all synced to the URL so any view is shareable
+- Articles open without an account, with reading time, a reading-progress bar and related posts
+- Markdown rendering (headings, lists, code blocks, tables, links)
+- Share to X, LinkedIn, WhatsApp, or copy the link (native share sheet on mobile)
+- Light / dark theme that follows the system, with no flash on load
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Writers**
+- Markdown editor with a formatting toolbar and live preview
+- Drafts autosave to the device and restore on return
+- Drag-and-drop cover image with type/size validation
+- Warns before you leave with unsaved changes
+- Dashboard with post stats, status filters, edit and delete
+- Profile settings
 
-### `npm test`
+**Under the hood**
+- Every route is code-split and loaded on demand
+- Server state cached and de-duplicated with TanStack Query (one `verifyToken` call instead of one per page)
+- Session expires automatically from the JWT `exp` claim; a rejected token signs you out cleanly
+- Accessible: semantic landmarks, skip link, labelled controls, focus rings, `prefers-reduced-motion`
+- Old URLs (`/blogList`, `/more/:id`, `/profile`…) redirect to their new homes
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech stack
 
-### `npm run build`
+| Area | Choice |
+|---|---|
+| Build | Vite |
+| UI | React 19 + TypeScript (strict) |
+| Styling | Tailwind CSS v4 + Typography plugin |
+| Routing | React Router 7 (data router, lazy routes) |
+| Server state | TanStack Query 5 |
+| Forms | React Hook Form + Zod |
+| Testing | Vitest + Testing Library |
+| CI | GitHub Actions — lint, typecheck, test, build |
+| Hosting | Vercel (frontend), Render (API) |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+src/
+  app/            router
+  components/
+    layout/       navbar, footer, root layout
+    ui/           buttons, form fields, dialog, markdown, skeletons…
+  features/
+    auth/         AuthProvider, useAuth, route guard, auth API
+    posts/        query/mutation hooks, post cards
+  lib/            API client, token helpers, utils, categories
+  routes/         one file per page (lazy-loaded)
+  test/           test setup and helpers
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Design decisions
 
-### `npm run eject`
+- **The post list is the source of truth for reading.** The API's single-post endpoint requires a token, but the public list already returns full posts, so article pages read from the cached list. Readers get instant navigation and never hit a login wall.
+- **One auth source.** `AuthProvider` owns the token and the current user; pages call `useAuth()` instead of each re-verifying the token.
+- **Filters live in the URL**, not component state — back/forward and shared links just work.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Getting started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm install
+cp .env.example .env   # optional: point at a local API
+npm run dev            # http://localhost:5173
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+| Script | |
+|---|---|
+| `npm run dev` | Dev server |
+| `npm run build` | Typecheck + production build |
+| `npm run preview` | Serve the production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript |
+| `npm test` | Unit and component tests |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Environment
 
-## Learn More
+| Variable | Default |
+|---|---|
+| `VITE_API_URL` | `https://blog-backend-node-7kjl.onrender.com` |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Vercel picks up `vercel.json` (Vite preset, `dist` output, SPA rewrites). Pushing to `master` deploys.
 
-### Code Splitting
+The API runs on Render's free tier, which sleeps when idle — the first request after a quiet spell can take up to a minute. The UI shows skeletons and a retry option while it wakes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Known API limitations
 
-### Analyzing the Bundle Size
+These live in the backend repo and are worth fixing there:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Update/delete endpoints check that you're logged in, not that you **own** the post or profile.
+- `GET /getBlog/:id` requires a token even though the list endpoint is public.
+- The login response includes the user document (with the password hash).
